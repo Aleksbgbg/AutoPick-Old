@@ -1,5 +1,7 @@
 ﻿namespace AutoPick
 {
+    using AutoPick.Services;
+    using AutoPick.Services.Interfaces;
     using AutoPick.ViewModels;
     using AutoPick.ViewModels.Interfaces;
 
@@ -13,6 +15,11 @@
             dependencyRegistrar.Singleton<IShellViewModel, ShellViewModel>();
             dependencyRegistrar.Singleton<IMainViewModel, MainViewModel>();
             dependencyRegistrar.Singleton<IChampionPickViewModel, ChampionPickViewModel>();
+        }
+
+        protected override void RegisterServices(IDependencyRegistrar dependencyRegistrar)
+        {
+            dependencyRegistrar.PerRequest<IChampionLoader, ChampionLoader>();
         }
     }
 }

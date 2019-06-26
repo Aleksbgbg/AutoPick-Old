@@ -86,7 +86,11 @@
     </Page>
     <Compile Include="Converters\ChampionImageConverter.cs" />
     <Compile Include="Models\Champion.cs" />
+    <Compile Include="Models\ResourceType.cs" />
+    <Compile Include="Services\ChampionLoader.cs" />
     <Compile Include="Services\Interfaces\IChampionLoader.cs" />
+    <Compile Include="Services\Interfaces\IResourceReader.cs" />
+    <Compile Include="Services\Interfaces\IResourceResolver.cs" />
     <Compile Include="ViewModels\ChampionPickViewModel.cs" />
     <Compile Include="ViewModels\Interfaces\IChampionPickViewModel.cs" />
     <Compile Include="Views\ChampionPickView.xaml.cs">
