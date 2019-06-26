@@ -1,7 +1,7 @@
-#include <Windows.h>
-
 #define EXTERN_DECL extern "C" __declspec(dllexport)
-#define CDECL __cdecl
+#define CALL_CDECL __cdecl
+
+#include <Windows.h>
 
 struct BitmapCreation
 {
@@ -16,12 +16,12 @@ HWND AutoPick_FindWindow(LPCSTR windowName)
 	return FindWindow(nullptr, windowName);
 }
 
-EXTERN_DECL bool CDECL IsWindowOpen(LPCSTR windowName)
+EXTERN_DECL bool CALL_CDECL IsWindowOpen(LPCSTR windowName)
 {
 	return AutoPick_FindWindow(windowName) != nullptr;
 }
 
-EXTERN_DECL BitmapCreation CDECL ScreenshotWindowByName(LPCSTR windowName)
+EXTERN_DECL BitmapCreation CALL_CDECL ScreenshotWindowByName(LPCSTR windowName)
 {
 	HWND window = AutoPick_FindWindow(windowName);
 
@@ -49,7 +49,7 @@ EXTERN_DECL BitmapCreation CDECL ScreenshotWindowByName(LPCSTR windowName)
 	return bitmapCreation;
 }
 
-EXTERN_DECL void CDECL CleanUpBitmapCreation(const BitmapCreation& bitmapCreation)
+EXTERN_DECL void CALL_CDECL CleanUpBitmapCreation(const BitmapCreation& bitmapCreation)
 {
 	ReleaseDC(bitmapCreation.sourceWindow, bitmapCreation.sourceDeviceContext);
 	DeleteDC(bitmapCreation.targetDeviceContext);
