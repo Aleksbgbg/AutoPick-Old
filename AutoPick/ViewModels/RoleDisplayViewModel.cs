@@ -8,11 +8,14 @@
 
     public class RoleDisplayViewModel : ViewModelBase, IRoleDisplayViewModel
     {
-        public RoleDisplayViewModel(ILaneLoader laneLoader)
+        public RoleDisplayViewModel(ILaneLoader laneLoader, IGameTrackViewModel gameTrackViewModel)
         {
+            GameTrackViewModel = gameTrackViewModel;
             Lanes = new BindableCollection<Lane>(laneLoader.LoadAllLanes());
             _selectedLane = Lanes[0];
         }
+
+        public IGameTrackViewModel GameTrackViewModel { get; }
 
         public IObservableCollection<Lane> Lanes { get; }
 

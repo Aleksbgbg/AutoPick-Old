@@ -54,7 +54,7 @@
 
         private RoleDisplayViewModel CreateViewModel()
         {
-            return _roleDisplayViewModel = new RoleDisplayViewModel(_laneLoaderMock.Object);
+            return _roleDisplayViewModel = new RoleDisplayViewModel(_laneLoaderMock.Object, null);
         }
 
         private void ChangeChampion(Champion champion)
