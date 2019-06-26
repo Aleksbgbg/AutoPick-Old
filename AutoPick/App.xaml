@@ -1,14 +1,14 @@
 ﻿<Application x:Class="AutoPick.App"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-			 xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-			 xmlns:AutoPick="clr-namespace:AutoPick">
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:AutoPick="clr-namespace:AutoPick">
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary>
                     <AutoPick:AppBootstrapper x:Key="Bootstrapper"/>
                 </ResourceDictionary>
-                
+
                 <ResourceDictionary Source="Themes/Brushes.xaml"/>
                 <ResourceDictionary Source="Themes/Geometries.xaml"/>
                 <ResourceDictionary Source="Themes/Images.xaml"/>
