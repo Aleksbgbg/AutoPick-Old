@@ -19,8 +19,9 @@
 
         protected override void RegisterServices(IDependencyRegistrar dependencyRegistrar)
         {
-            dependencyRegistrar.PerRequest<IChampionLoader, ChampionLoader>();
+            dependencyRegistrar.Singleton<IChampionLoader, ChampionLoader>();
             dependencyRegistrar.Singleton<IResourceResolver, ResourceResolver>();
+            dependencyRegistrar.Singleton<IResourceReader, ResourceReader>();
         }
     }
 }
