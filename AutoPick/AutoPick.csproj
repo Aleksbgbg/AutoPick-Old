@@ -89,8 +89,10 @@
     <Compile Include="Models\ResourceType.cs" />
     <Compile Include="Services\ChampionLoader.cs" />
     <Compile Include="Services\Interfaces\IChampionLoader.cs" />
+    <Compile Include="Services\Interfaces\ILocalDirectoryProvider.cs" />
     <Compile Include="Services\Interfaces\IResourceReader.cs" />
     <Compile Include="Services\Interfaces\IResourceResolver.cs" />
+    <Compile Include="Services\ResourceResolver.cs" />
     <Compile Include="ViewModels\ChampionPickViewModel.cs" />
     <Compile Include="ViewModels\Interfaces\IChampionPickViewModel.cs" />
     <Compile Include="Views\ChampionPickView.xaml.cs">
