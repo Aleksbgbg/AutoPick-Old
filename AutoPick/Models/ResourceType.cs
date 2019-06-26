@@ -3,6 +3,7 @@
     public enum ResourceType
     {
         ChampionNames,
-        ChampionSquares
+        ChampionSquares,
+        LaneImages
     }
 }

@@ -8,19 +8,22 @@
     using AutoPick.Models;
     using AutoPick.Services.Interfaces;
 
-    public class ChampionImageConverter : IValueConverter
+    public class ResourceImageConverter : IValueConverter
     {
         private readonly IResourceResolver _resourceResolver;
 
-        public ChampionImageConverter(IResourceResolver resourceResolver)
+        private readonly ResourceType _resourceType;
+
+        public ResourceImageConverter(IResourceResolver resourceResolver, ResourceType resourceType)
         {
             _resourceResolver = resourceResolver;
+            _resourceType = resourceType;
         }
 
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             string championName = (string)value;
-            string championSquaresDirectory = _resourceResolver.ResolveResourcePath(ResourceType.ChampionSquares);
+            string championSquaresDirectory = _resourceResolver.ResolveResourcePath(_resourceType);
 
             return Path.Combine(championSquaresDirectory, string.Concat(championName, ".png"));
         }

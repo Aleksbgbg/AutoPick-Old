@@ -1,11 +1,14 @@
 ﻿namespace AutoPick.Converters
 {
+    using AutoPick.Models;
     using AutoPick.Services.Interfaces;
 
     using Caliburn.Micro;
 
     public static class DefaultConverters
     {
-        public static ChampionImageConverter ChampionImageConverter { get; } = new ChampionImageConverter(IoC.Get<IResourceResolver>());
+        public static ResourceImageConverter ChampionImageConverter { get; } = new ResourceImageConverter(IoC.Get<IResourceResolver>(), ResourceType.ChampionSquares);
+
+        public static ResourceImageConverter LaneImageConverter { get; } = new ResourceImageConverter(IoC.Get<IResourceResolver>(), ResourceType.LaneImages);
     }
 }
