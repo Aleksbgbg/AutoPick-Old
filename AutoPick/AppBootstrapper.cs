@@ -12,6 +12,7 @@
         {
             dependencyRegistrar.Singleton<IShellViewModel, ShellViewModel>();
             dependencyRegistrar.Singleton<IMainViewModel, MainViewModel>();
+            dependencyRegistrar.Singleton<IChampionPickViewModel, ChampionPickViewModel>();
         }
     }
 }

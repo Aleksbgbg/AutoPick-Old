@@ -72,6 +72,10 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="Views\ChampionPickView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>XamlIntelliSenseFileGenerator</Generator>
+    </Page>
     <Page Include="Views\MainView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -80,6 +84,15 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Compile Include="Converters\ChampionImageConverter.cs" />
+    <Compile Include="Models\Champion.cs" />
+    <Compile Include="Services\Interfaces\IChampionLoader.cs" />
+    <Compile Include="ViewModels\ChampionPickViewModel.cs" />
+    <Compile Include="ViewModels\Interfaces\IChampionPickViewModel.cs" />
+    <Compile Include="Views\ChampionPickView.xaml.cs">
+      <DependentUpon>ChampionPickView.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Views\MainView.xaml.cs">
       <DependentUpon>MainView.xaml</DependentUpon>
       <SubType>Code</SubType>
@@ -154,10 +167,7 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Converters\" />
     <Folder Include="Images\" />
-    <Folder Include="Models\" />
-    <Folder Include="Services\Interfaces\" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\Champions.txt" />

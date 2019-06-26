@@ -1,0 +1,25 @@
+﻿<UserControl x:Class="AutoPick.Views.ChampionPickView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:Converters="clr-namespace:AutoPick.Converters"
+             xmlns:ViewModels="clr-namespace:AutoPick.ViewModels"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             d:DataContext="{d:DesignInstance ViewModels:ChampionPickViewModel}"
+             mc:Ignorable="d">
+    <ListBox ItemsSource="{Binding Champions, Mode=OneTime}">
+        <ListBox.ItemTemplate>
+            <DataTemplate>
+                <StackPanel Width="150">
+                    <Image Width="75"
+                           Height="75"
+                           Source="{Binding Name, Mode=OneTime, Converter={x:Static Converters:ChampionImageConverter.Default}}"/>
+                    <TextBlock HorizontalAlignment="Center"
+                               FontSize="20"
+                               FontWeight="DemiBold"
+                               Text="{Binding Name, Mode=OneTime}"/>
+                </StackPanel>
+            </DataTemplate>
+        </ListBox.ItemTemplate>
+    </ListBox>
+</UserControl>
