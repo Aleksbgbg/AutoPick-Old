@@ -2,11 +2,11 @@
 using System.Runtime.InteropServices;
 using System.Windows;
 
-[assembly: AssemblyTitle("LoL Lane Picker")]
+[assembly: AssemblyTitle("AutoPick")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("LoL Lane Picker")]
+[assembly: AssemblyProduct("AutoPick")]
 [assembly: AssemblyCopyright("Copyright © Aleks Todorov 2019")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
