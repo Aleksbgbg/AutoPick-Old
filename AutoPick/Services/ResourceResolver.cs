@@ -22,6 +22,9 @@
                 case ResourceType.ChampionNames:
                     return Path.Combine(_localDirectoryProvider.CurrentDirectory, @"Resources\Champions.txt");
 
+                case ResourceType.ChampionSquares:
+                    return Path.Combine(_localDirectoryProvider.CurrentDirectory, @"Resources\ChampionSquares");
+
                 default:
                     throw new ArgumentOutOfRangeException(nameof(resourceType), resourceType, "Invalid resource type.");
             }
