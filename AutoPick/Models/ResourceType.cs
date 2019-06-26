@@ -2,6 +2,7 @@
 {
     public enum ResourceType
     {
-        ChampionNames
+        ChampionNames,
+        ChampionSquares
     }
 }

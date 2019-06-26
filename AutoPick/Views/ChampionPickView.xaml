@@ -13,7 +13,7 @@
                 <StackPanel Width="150">
                     <Image Width="75"
                            Height="75"
-                           Source="{Binding Name, Mode=OneTime, Converter={x:Static Converters:ChampionImageConverter.Default}}"/>
+                           Source="{Binding Name, Mode=OneTime, Converter={x:Static Converters:DefaultConverters.ChampionImageConverter}}"/>
                     <TextBlock HorizontalAlignment="Center"
                                FontSize="20"
                                FontWeight="DemiBold"

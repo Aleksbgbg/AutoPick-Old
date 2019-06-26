@@ -85,6 +85,7 @@
       <SubType>Designer</SubType>
     </Page>
     <Compile Include="Converters\ChampionImageConverter.cs" />
+    <Compile Include="Converters\DefaultConverters.cs" />
     <Compile Include="Models\Champion.cs" />
     <Compile Include="Models\ResourceType.cs" />
     <Compile Include="Services\ChampionLoader.cs" />
