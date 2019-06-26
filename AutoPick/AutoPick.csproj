@@ -102,6 +102,7 @@
     <Compile Include="Services\Interfaces\ILocalDirectoryProvider.cs" />
     <Compile Include="Services\Interfaces\IResourceReader.cs" />
     <Compile Include="Services\Interfaces\IResourceResolver.cs" />
+    <Compile Include="Services\LaneLoader.cs" />
     <Compile Include="Services\LocalDirectoryProvider.cs" />
     <Compile Include="Services\ResourceReader.cs" />
     <Compile Include="Services\ResourceResolver.cs" />

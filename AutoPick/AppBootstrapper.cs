@@ -24,6 +24,7 @@
             dependencyRegistrar.Singleton<IResourceResolver, ResourceResolver>();
             dependencyRegistrar.Singleton<IResourceReader, ResourceReader>();
             dependencyRegistrar.Singleton<ILocalDirectoryProvider, LocalDirectoryProvider>();
+            dependencyRegistrar.Singleton<ILaneLoader, LaneLoader>();
         }
     }
 }
