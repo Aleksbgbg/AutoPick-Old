@@ -30,17 +30,27 @@
 
             string championNamesFile = Resolve(ResourceType.ChampionNames);
 
-            Assert.Equal(@"CurrentDirectory\Resources\Champions.txt", championNamesFile);
+            Assert.Equal(GetResourceRelativePath("Champions.txt"), championNamesFile);
         }
 
         [Fact]
-        public void TestReolveChampionSquares()
+        public void TestResolveChampionSquares()
         {
             SetupCurrentDirectory();
 
             string championSquaresDirectory = Resolve(ResourceType.ChampionSquares);
 
-            Assert.Equal(@"CurrentDirectory\Resources\ChampionSquares", championSquaresDirectory);
+            Assert.Equal(GetResourceRelativePath("ChampionSquares"), championSquaresDirectory);
+        }
+
+        [Fact]
+        public void TestResolveLaneImages()
+        {
+            SetupCurrentDirectory();
+
+            string laneImagesDirectory = Resolve(ResourceType.LaneImages);
+
+            Assert.Equal(GetResourceRelativePath("Lanes"), laneImagesDirectory);
         }
 
         private void SetupCurrentDirectory()
@@ -52,6 +62,11 @@
         private string Resolve(ResourceType resourceType)
         {
             return _resourceResolver.ResolveResourcePath(resourceType);
+        }
+
+        private static string GetResourceRelativePath(string resourceName)
+        {
+            return $@"{CurrentDirectory}\Resources\{resourceName}";
         }
     }
 }

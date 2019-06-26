@@ -20,14 +20,22 @@
             switch (resourceType)
             {
                 case ResourceType.ChampionNames:
-                    return Path.Combine(_localDirectoryProvider.CurrentDirectory, @"Resources\Champions.txt");
+                    return CombineWithCurrentDirectory(@"Resources\Champions.txt");
 
                 case ResourceType.ChampionSquares:
-                    return Path.Combine(_localDirectoryProvider.CurrentDirectory, @"Resources\ChampionSquares");
+                    return CombineWithCurrentDirectory(@"Resources\ChampionSquares");
+
+                case ResourceType.LaneImages:
+                    return CombineWithCurrentDirectory(@"Resources\Lanes");
 
                 default:
                     throw new ArgumentOutOfRangeException(nameof(resourceType), resourceType, "Invalid resource type.");
             }
+        }
+
+        private string CombineWithCurrentDirectory(string resourcePath)
+        {
+            return Path.Combine(_localDirectoryProvider.CurrentDirectory, resourcePath);
         }
     }
 }
