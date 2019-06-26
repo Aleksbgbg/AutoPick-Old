@@ -39,6 +39,7 @@
         [Fact]
         public void TestChangeSelectedChampionReflectsInDisplay()
         {
+            SetupChampions();
             Champion champion = new Champion("Zed");
 
             CreateViewModel().SelectedChampion = champion;

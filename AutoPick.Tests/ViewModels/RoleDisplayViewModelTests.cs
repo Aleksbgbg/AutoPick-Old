@@ -35,6 +35,8 @@
         [Fact]
         public void TestChangeChampion()
         {
+            SetupLanes();
+
             ChangeChampion(new Champion("Katarina"));
 
             Assert.Equal("Katarina", ChampionName());
