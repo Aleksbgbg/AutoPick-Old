@@ -46,6 +46,17 @@
             VerifyChangeChampionCalled(champion);
         }
 
+        [Fact]
+        public void TestChampionResetsWhenNull()
+        {
+            var champions = SetupChampions();
+            var viewModel = CreateViewModel();
+
+            viewModel.SelectedChampion = null;
+
+            Assert.Equal(champions[0], viewModel.SelectedChampion.Name);
+        }
+
         private string[] SetupChampions()
         {
             string[] championNames = { "Ahri", "Jax", "Kayn" };

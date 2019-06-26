@@ -22,16 +22,13 @@
             </xctk:WatermarkTextBox.Watermark>
         </xctk:WatermarkTextBox>
         <ListBox ItemsSource="{Binding Champions, Mode=OneTime}"
-                 SelectedItem="{Binding SelectedChampion, Mode=OneWayToSource}">
+                 SelectedItem="{Binding SelectedChampion}">
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <StackPanel Width="150">
-                        <Image Width="75"
-                               Height="75"
-                               Source="{Binding Name, Mode=OneTime, Converter={x:Static Converters:DefaultConverters.ChampionImageConverter}}"/>
-                        <TextBlock HorizontalAlignment="Center"
-                                   FontSize="20"
-                                   FontWeight="DemiBold"
+                        <Image Source="{Binding Name, Mode=OneTime, Converter={x:Static Converters:DefaultConverters.ChampionImageConverter}}"
+                               Style="{StaticResource Image.CharacterSquare}"/>
+                        <TextBlock Style="{StaticResource TextBlock.CharacterName}"
                                    Text="{Binding Name, Mode=OneTime}"/>
                     </StackPanel>
                 </DataTemplate>

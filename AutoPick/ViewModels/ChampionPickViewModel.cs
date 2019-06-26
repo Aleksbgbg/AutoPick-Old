@@ -22,6 +22,8 @@
 
             Champions = new BindableCollection<Champion>(championLoader.LoadAllChampions());
             _championsCollectionView = CollectionViewSource.GetDefaultView(Champions);
+
+            SelectedChampion = Champions[0];
         }
 
         public IObservableCollection<Champion> Champions { get; }
@@ -33,6 +35,11 @@
 
             set
             {
+                if (value == null)
+                {
+                    value = Champions[0];
+                }
+
                 if (_selectedChampion == value) return;
 
                 _selectedChampion = value;

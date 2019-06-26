@@ -11,6 +11,7 @@
         public RoleDisplayViewModel(ILaneLoader laneLoader)
         {
             Lanes = new BindableCollection<Lane>(laneLoader.LoadAllLanes());
+            _selectedLane = Lanes[0];
         }
 
         public IObservableCollection<Lane> Lanes { get; }
