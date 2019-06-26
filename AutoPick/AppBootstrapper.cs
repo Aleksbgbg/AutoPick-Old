@@ -22,6 +22,7 @@
             dependencyRegistrar.Singleton<IChampionLoader, ChampionLoader>();
             dependencyRegistrar.Singleton<IResourceResolver, ResourceResolver>();
             dependencyRegistrar.Singleton<IResourceReader, ResourceReader>();
+            dependencyRegistrar.Singleton<ILocalDirectoryProvider, LocalDirectoryProvider>();
         }
     }
 }
