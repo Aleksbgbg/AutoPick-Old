@@ -10,4 +10,8 @@
   <ItemGroup>
     <ProjectReference Include="..\AutoPick\AutoPick.csproj" />
   </ItemGroup>
+  <ItemGroup>
+    <Reference Include="PresentationCore" />
+    <Reference Include="WindowsBase" />
+  </ItemGroup>
 </Project>

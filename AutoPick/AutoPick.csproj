@@ -79,6 +79,10 @@
       <SubType>Designer</SubType>
       <Generator>XamlIntelliSenseFileGenerator</Generator>
     </Page>
+    <Page Include="Views\GameTrackView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\MainView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -94,25 +98,34 @@
     <Compile Include="Converters\DefaultConverters.cs" />
     <Compile Include="Converters\ResourceImageConverter.cs" />
     <Compile Include="Models\Champion.cs" />
+    <Compile Include="Models\GameStatus.cs" />
     <Compile Include="Models\Lane.cs" />
     <Compile Include="Models\ResourceType.cs" />
+    <Compile Include="Models\GameStatusUpdate.cs" />
     <Compile Include="Services\ChampionLoader.cs" />
     <Compile Include="Services\Interfaces\IChampionLoader.cs" />
+    <Compile Include="Services\Interfaces\IGamePollService.cs" />
     <Compile Include="Services\Interfaces\ILaneLoader.cs" />
     <Compile Include="Services\Interfaces\ILocalDirectoryProvider.cs" />
     <Compile Include="Services\Interfaces\IResourceReader.cs" />
     <Compile Include="Services\Interfaces\IResourceResolver.cs" />
+    <Compile Include="Services\Interfaces\IStatusMessageService.cs" />
     <Compile Include="Services\LaneLoader.cs" />
     <Compile Include="Services\LocalDirectoryProvider.cs" />
     <Compile Include="Services\ResourceReader.cs" />
     <Compile Include="Services\ResourceResolver.cs" />
     <Compile Include="ViewModels\ChampionPickViewModel.cs" />
+    <Compile Include="ViewModels\GameTrackViewModel.cs" />
     <Compile Include="ViewModels\Interfaces\IChampionPickViewModel.cs" />
+    <Compile Include="ViewModels\Interfaces\IGameTrackViewModel.cs" />
     <Compile Include="ViewModels\Interfaces\IRoleDisplayViewModel.cs" />
     <Compile Include="ViewModels\RoleDisplayViewModel.cs" />
     <Compile Include="Views\ChampionPickView.xaml.cs">
       <DependentUpon>ChampionPickView.xaml</DependentUpon>
       <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Views\GameTrackView.xaml.cs">
+      <DependentUpon>GameTrackView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\MainView.xaml.cs">
       <DependentUpon>MainView.xaml</DependentUpon>

@@ -16,6 +16,7 @@
             dependencyRegistrar.Singleton<IMainViewModel, MainViewModel>();
             dependencyRegistrar.Singleton<IChampionPickViewModel, ChampionPickViewModel>();
             dependencyRegistrar.Singleton<IRoleDisplayViewModel, RoleDisplayViewModel>();
+            dependencyRegistrar.Singleton<IGameTrackViewModel, GameTrackViewModel>();
         }
 
         protected override void RegisterServices(IDependencyRegistrar dependencyRegistrar)
