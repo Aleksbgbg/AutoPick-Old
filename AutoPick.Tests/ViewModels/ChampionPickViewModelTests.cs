@@ -5,6 +5,7 @@
     using AutoPick.Models;
     using AutoPick.Services.Interfaces;
     using AutoPick.ViewModels;
+    using AutoPick.ViewModels.Interfaces;
 
     using Moq;
 
@@ -14,11 +15,15 @@
     {
         private readonly Mock<IChampionLoader> _championLoaderMock;
 
+        private readonly Mock<IRoleDisplayViewModel> _roleDisplayViewModelMock;
+
         private ChampionPickViewModel _championPickViewModel;
 
         public ChampionPickViewModelTests()
         {
             _championLoaderMock = new Mock<IChampionLoader>();
+
+            _roleDisplayViewModelMock = new Mock<IRoleDisplayViewModel>();
         }
 
         [Fact]
@@ -29,6 +34,16 @@
             var viewModel = CreateViewModel();
 
             Assert.Equal(championNames, viewModel.Champions.Select(champion => champion.Name));
+        }
+
+        [Fact]
+        public void TestChangeSelectedChampionReflectsInDisplay()
+        {
+            Champion champion = new Champion("Zed");
+
+            CreateViewModel().SelectedChampion = champion;
+
+            VerifyChangeChampionCalled(champion);
         }
 
         private string[] SetupChampions()
@@ -43,7 +58,12 @@
 
         private ChampionPickViewModel CreateViewModel()
         {
-            return _championPickViewModel = new ChampionPickViewModel(_championLoaderMock.Object);
+            return _championPickViewModel = new ChampionPickViewModel(_championLoaderMock.Object, _roleDisplayViewModelMock.Object);
+        }
+
+        private void VerifyChangeChampionCalled(Champion champion)
+        {
+            _roleDisplayViewModelMock.Verify(roleDisplay => roleDisplay.ChangeChampion(champion), Times.Once);
         }
     }
 }

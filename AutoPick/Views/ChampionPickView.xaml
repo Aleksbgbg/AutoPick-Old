@@ -21,7 +21,8 @@
                 </StackPanel>
             </xctk:WatermarkTextBox.Watermark>
         </xctk:WatermarkTextBox>
-        <ListBox ItemsSource="{Binding Champions, Mode=OneTime}">
+        <ListBox ItemsSource="{Binding Champions, Mode=OneTime}"
+                 SelectedItem="{Binding SelectedChampion, Mode=OneWayToSource}">
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <StackPanel Width="150">

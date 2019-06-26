@@ -12,16 +12,35 @@
 
     public class ChampionPickViewModel : ViewModelBase, IChampionPickViewModel
     {
+        private readonly IRoleDisplayViewModel _roleDisplayViewModel;
+
         private readonly ICollectionView _championsCollectionView;
 
-        public ChampionPickViewModel(IChampionLoader championLoader)
+        public ChampionPickViewModel(IChampionLoader championLoader, IRoleDisplayViewModel roleDisplayViewModel)
         {
-            Champions = new BindableCollection<Champion>(championLoader.LoadAllChampions());
+            _roleDisplayViewModel = roleDisplayViewModel;
 
+            Champions = new BindableCollection<Champion>(championLoader.LoadAllChampions());
             _championsCollectionView = CollectionViewSource.GetDefaultView(Champions);
         }
 
         public IObservableCollection<Champion> Champions { get; }
+
+        private Champion _selectedChampion;
+        public Champion SelectedChampion
+        {
+            get => _selectedChampion;
+
+            set
+            {
+                if (_selectedChampion == value) return;
+
+                _selectedChampion = value;
+                NotifyOfPropertyChange(nameof(SelectedChampion));
+
+                _roleDisplayViewModel.ChangeChampion(_selectedChampion);
+            }
+        }
 
         private string _searchText;
         public string SearchText
