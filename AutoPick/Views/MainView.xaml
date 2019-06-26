@@ -7,5 +7,9 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              d:DataContext="{d:DesignInstance ViewModels:MainViewModel}"
              mc:Ignorable="d">
-    <ContentControl Caliburn:View.Model="{Binding ChampionPickViewModel, Mode=OneTime}"/>
+    <DockPanel>
+        <ContentControl Caliburn:View.Model="{Binding ChampionPickViewModel, Mode=OneTime}"
+                        DockPanel.Dock="Left"/>
+        <ContentControl Caliburn:View.Model="{Binding RoleDisplayViewModel, Mode=OneTime}"/>
+    </DockPanel>
 </UserControl>

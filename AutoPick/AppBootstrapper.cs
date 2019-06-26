@@ -15,6 +15,7 @@
             dependencyRegistrar.Singleton<IShellViewModel, ShellViewModel>();
             dependencyRegistrar.Singleton<IMainViewModel, MainViewModel>();
             dependencyRegistrar.Singleton<IChampionPickViewModel, ChampionPickViewModel>();
+            dependencyRegistrar.Singleton<IRoleDisplayViewModel, RoleDisplayViewModel>();
         }
 
         protected override void RegisterServices(IDependencyRegistrar dependencyRegistrar)
