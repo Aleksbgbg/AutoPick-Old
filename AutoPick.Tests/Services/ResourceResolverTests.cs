@@ -23,34 +23,18 @@
             _resourceResolver = new ResourceResolver(_localDirectoryProviderMock.Object);
         }
 
-        [Fact]
-        public void TestResolveChampionNames()
+        [Theory]
+        [InlineData(ResourceType.ChampionNames, "Champions.txt")]
+        [InlineData(ResourceType.ChampionSquares, "ChampionSquares")]
+        [InlineData(ResourceType.LaneImages, "Lanes")]
+        [InlineData(ResourceType.DetectionImages, "Detection")]
+        public void TestResolveResource(ResourceType type, string expectedPath)
         {
             SetupCurrentDirectory();
 
-            string championNamesFile = Resolve(ResourceType.ChampionNames);
+            string filePath = Resolve(type);
 
-            Assert.Equal(GetResourceRelativePath("Champions.txt"), championNamesFile);
-        }
-
-        [Fact]
-        public void TestResolveChampionSquares()
-        {
-            SetupCurrentDirectory();
-
-            string championSquaresDirectory = Resolve(ResourceType.ChampionSquares);
-
-            Assert.Equal(GetResourceRelativePath("ChampionSquares"), championSquaresDirectory);
-        }
-
-        [Fact]
-        public void TestResolveLaneImages()
-        {
-            SetupCurrentDirectory();
-
-            string laneImagesDirectory = Resolve(ResourceType.LaneImages);
-
-            Assert.Equal(GetResourceRelativePath("Lanes"), laneImagesDirectory);
+            Assert.Equal(GetResourceRelativePath(expectedPath), filePath);
         }
 
         private void SetupCurrentDirectory()

@@ -4,6 +4,7 @@
     {
         ChampionNames,
         ChampionSquares,
-        LaneImages
+        LaneImages,
+        DetectionImages
     }
 }
