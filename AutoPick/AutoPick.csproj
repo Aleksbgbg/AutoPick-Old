@@ -120,6 +120,7 @@
     <Compile Include="Services\LocalDirectoryProvider.cs" />
     <Compile Include="Services\ResourceReader.cs" />
     <Compile Include="Services\ResourceResolver.cs" />
+    <Compile Include="Services\ThreadRunner.cs" />
     <Compile Include="ViewModels\ChampionPickViewModel.cs" />
     <Compile Include="ViewModels\GameTrackViewModel.cs" />
     <Compile Include="ViewModels\Interfaces\IChampionPickViewModel.cs" />
