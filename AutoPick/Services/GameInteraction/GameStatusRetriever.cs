@@ -3,6 +3,7 @@
     using System;
 
     using AutoPick.Models;
+    using AutoPick.Services.GameInteraction.ImageProcessing;
 
     public class GameStatusRetriever : IGameStatusRetriever
     {
@@ -10,10 +11,13 @@
 
         private readonly IGameImageProcessor _gameImageProcessor;
 
-        public GameStatusRetriever(IGameWindowManager gameWindowManager, IGameImageProcessor gameImageProcessor)
+        private readonly IToImageConverter _toImageConverter;
+
+        public GameStatusRetriever(IGameWindowManager gameWindowManager, IGameImageProcessor gameImageProcessor, IToImageConverter toImageConverter)
         {
             _gameWindowManager = gameWindowManager;
             _gameImageProcessor = gameImageProcessor;
+            _toImageConverter = toImageConverter;
         }
 
         public GameStatusUpdate GetCurrentStatus()
@@ -28,11 +32,12 @@
                 return new GameStatusUpdate(GameStatus.Minimised, null);
             }
 
-            IntPtr gameImage = _gameWindowManager.CaptureWindow();
+            IntPtr imagePointer = _gameWindowManager.CaptureWindow();
+            IImage windowImage = _toImageConverter.ImageFrom(imagePointer);
 
-            GameStatusUpdate gameStatusUpdate = _gameImageProcessor.ProcessGameImage(gameImage);
+            GameStatusUpdate gameStatusUpdate = _gameImageProcessor.ProcessGameImage(windowImage);
 
-            _gameWindowManager.ReleaseWindowCapture(gameImage);
+            _gameWindowManager.ReleaseWindowCapture(imagePointer);
 
             return gameStatusUpdate;
         }

@@ -5,6 +5,7 @@
 
     using AutoPick.Models;
     using AutoPick.Services.GameInteraction;
+    using AutoPick.Services.GameInteraction.ImageProcessing;
 
     using Moq;
 
@@ -16,6 +17,8 @@
 
         private readonly Mock<IGameImageProcessor> _gameImageProcessorMock;
 
+        private readonly Mock<IToImageConverter> _imageConverterMock;
+
         private readonly GameStatusRetriever _gameStatusRetriever;
 
         public GameStatusRetrieverTests()
@@ -24,7 +27,9 @@
 
             _gameImageProcessorMock = new Mock<IGameImageProcessor>();
 
-            _gameStatusRetriever = new GameStatusRetriever(_gameWindowManagerMock.Object, _gameImageProcessorMock.Object);
+            _imageConverterMock = new Mock<IToImageConverter>();
+
+            _gameStatusRetriever = new GameStatusRetriever(_gameWindowManagerMock.Object, _gameImageProcessorMock.Object, _imageConverterMock.Object);
         }
 
         [Fact]
@@ -85,10 +90,15 @@
         {
             SetupWindowActive(true);
             SetupWindowMinimised(false);
+
+            Mock<IImage> imageMock = new Mock<IImage>();
+
+            _imageConverterMock.Setup(converter => converter.ImageFrom(It.IsAny<IntPtr>()))
+                               .Returns(imageMock.Object);
             _gameWindowManagerMock.Setup(manager => manager.ReleaseWindowCapture(It.IsAny<IntPtr>()));
 
             var image = SetupWindowCapture();
-            var status = SetupGameStatusFromImage(image);
+            var status = SetupGameStatusFromImage(imageMock.Object);
 
             return status;
         }
@@ -115,7 +125,7 @@
             return image;
         }
 
-        private GameStatusUpdate SetupGameStatusFromImage(IntPtr image)
+        private GameStatusUpdate SetupGameStatusFromImage(IImage image)
         {
             GameStatusUpdate status = new GameStatusUpdate(GameStatus.AcceptingMatch,
                                                            new BitmapImage());
@@ -139,8 +149,13 @@
                                   .Setup(manager => manager.CaptureWindow())
                                   .Returns(image);
 
+            Mock<IImage> imageMock = new Mock<IImage>();
+
+            _imageConverterMock.Setup(converter => converter.ImageFrom(image))
+                               .Returns(imageMock.Object);
+
             _gameImageProcessorMock.InSequence(sequence)
-                                   .Setup(processor => processor.ProcessGameImage(image));
+                                   .Setup(processor => processor.ProcessGameImage(imageMock.Object));
 
             _gameWindowManagerMock.InSequence(sequence)
                                   .Setup(manager => manager.ReleaseWindowCapture(image));
