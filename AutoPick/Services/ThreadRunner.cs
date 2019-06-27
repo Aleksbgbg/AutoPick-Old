@@ -22,8 +22,11 @@
 
         private async Task Run()
         {
-            ThreadAwake?.Invoke();
-            await Task.Delay(_delay);
+            while (true)
+            {
+                ThreadAwake?.Invoke();
+                await Task.Delay(_delay);
+            }
         }
     }
 }
