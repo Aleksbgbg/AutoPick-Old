@@ -28,6 +28,7 @@
             dependencyRegistrar.Singleton<ILaneLoader, LaneLoader>();
             dependencyRegistrar.Singleton<IGamePollService, GamePollService>();
             dependencyRegistrar.Singleton<IThreadRunner, ThreadRunner>();
+            dependencyRegistrar.Singleton<IGamePoller, GamePoller>();
         }
     }
 }
