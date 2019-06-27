@@ -5,7 +5,7 @@
 
     using AutoPick.Services.Interfaces;
 
-    public class Win32Kit : IWin32Kit
+    public class Win32Kit : IWin32Kit, IWindowClicker
     {
         private const string DllName = "AutoPick.Win32.dll";
 
@@ -33,6 +33,11 @@
             CleanUpWindowCapture(windowCapture);
         }
 
+        public void Click(int x, int y)
+        {
+            Click(WindowName, x, y);
+        }
+
         [DllImport(DllName, CallingConvention = CallConvention)]
         private static extern bool IsWindowOpen(string windowName);
 
@@ -44,5 +49,8 @@
 
         [DllImport(DllName, CallingConvention = CallConvention)]
         private static extern void CleanUpWindowCapture(IntPtr windowCapture);
+
+        [DllImport(DllName, CallingConvention = CallConvention)]
+        private static extern void Click(string windowName, int x, int y);
     }
 }

@@ -48,3 +48,23 @@ EXTERN_DECL void CALL_CONV CleanUpWindowCapture(HBITMAP bitmap)
 {
 	DeleteObject(bitmap);
 }
+
+EXTERN_DECL void CALL_CONV Click(LPCSTR windowName, const int x, const int y)
+{
+	HWND hwnd = AutoPick_FindWindow(windowName);
+
+	POINT targetClickPosition;
+	targetClickPosition.x = x;
+	targetClickPosition.y = y;
+
+	ClientToScreen(hwnd, &targetClickPosition);
+
+	INPUT input{ };
+	input.type = INPUT_MOUSE;
+	input.mi.dx = (targetClickPosition.x * 65536) / GetSystemMetrics(SM_CXSCREEN);
+	input.mi.dy = (targetClickPosition.y * 65536) / GetSystemMetrics(SM_CYSCREEN);
+	input.mi.dwFlags = MOUSEEVENTF_ABSOLUTE | MOUSEEVENTF_MOVE | MOUSEEVENTF_LEFTDOWN | MOUSEEVENTF_LEFTUP;
+
+	SetForegroundWindow(hwnd);
+	SendInput(1, &input, sizeof(input));
+}

@@ -29,7 +29,10 @@
             dependencyRegistrar.Singleton<IGamePollService, GamePollService>();
             dependencyRegistrar.Singleton<IThreadRunner, ThreadRunner>();
             dependencyRegistrar.Singleton<IGamePoller, GamePoller>();
-            dependencyRegistrar.Singleton<IWin32Kit, Win32Kit>();
+
+            dependencyRegistrar.Singleton<Win32Kit, Win32Kit>();
+            dependencyRegistrar.Handler<IWin32Kit>(retriever => retriever.GetInstance<Win32Kit>());
+            dependencyRegistrar.Handler<IWindowClicker>(retriever => retriever.GetInstance<Win32Kit>());
         }
     }
 }
