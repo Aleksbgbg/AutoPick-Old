@@ -107,12 +107,15 @@
     <Compile Include="Models\ResourceType.cs" />
     <Compile Include="Models\GameStatusUpdate.cs" />
     <Compile Include="Services\ChampionLoader.cs" />
+    <Compile Include="Services\GamePollService.cs" />
     <Compile Include="Services\Interfaces\IChampionLoader.cs" />
+    <Compile Include="Services\Interfaces\IGamePoller.cs" />
     <Compile Include="Services\Interfaces\IGamePollService.cs" />
     <Compile Include="Services\Interfaces\ILaneLoader.cs" />
     <Compile Include="Services\Interfaces\ILocalDirectoryProvider.cs" />
     <Compile Include="Services\Interfaces\IResourceReader.cs" />
     <Compile Include="Services\Interfaces\IResourceResolver.cs" />
+    <Compile Include="Services\Interfaces\IThreadRunner.cs" />
     <Compile Include="Services\LaneLoader.cs" />
     <Compile Include="Services\LocalDirectoryProvider.cs" />
     <Compile Include="Services\ResourceReader.cs" />

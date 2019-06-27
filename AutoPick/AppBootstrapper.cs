@@ -26,6 +26,7 @@
             dependencyRegistrar.Singleton<IResourceReader, ResourceReader>();
             dependencyRegistrar.Singleton<ILocalDirectoryProvider, LocalDirectoryProvider>();
             dependencyRegistrar.Singleton<ILaneLoader, LaneLoader>();
+            dependencyRegistrar.Singleton<IGamePollService, GamePollService>();
         }
     }
 }
