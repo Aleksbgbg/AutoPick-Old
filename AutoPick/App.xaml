@@ -9,6 +9,8 @@
                     <AutoPick:AppBootstrapper x:Key="Bootstrapper"/>
                 </ResourceDictionary>
 
+                <ResourceDictionary Source="pack://application:,,,/LoadingIndicators.WPF;component/Styles.xaml"/>
+
                 <ResourceDictionary Source="Themes/Brushes.xaml"/>
                 <ResourceDictionary Source="Themes/Geometries.xaml"/>
                 <ResourceDictionary Source="Themes/Images.xaml"/>

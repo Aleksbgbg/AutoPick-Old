@@ -8,11 +8,11 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              d:DataContext="{d:DesignInstance ViewModels:RoleDisplayViewModel}"
              mc:Ignorable="d">
-    <StackPanel>
-        <ContentControl Caliburn:View.Model="{Binding GameTrackViewModel, Mode=OneTime}"/>
-
-        <Grid HorizontalAlignment="Center"
-              VerticalAlignment="Center">
+    <DockPanel Margin="25">
+        <Grid Margin="0,5"
+              HorizontalAlignment="Center"
+              VerticalAlignment="Center"
+              DockPanel.Dock="Bottom">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="5"/>
@@ -55,5 +55,7 @@
                 </ComboBox.ItemTemplate>
             </ComboBox>
         </Grid>
-    </StackPanel>
+
+        <ContentControl Caliburn:View.Model="{Binding GameTrackViewModel, Mode=OneTime}"/>
+    </DockPanel>
 </UserControl>

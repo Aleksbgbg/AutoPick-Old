@@ -1,8 +1,145 @@
 ﻿<UserControl x:Class="AutoPick.Views.GameTrackView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:LoadingIndicators="clr-namespace:LoadingIndicators.WPF;assembly=LoadingIndicators.WPF"
+             xmlns:Models="clr-namespace:AutoPick.Models"
              xmlns:ViewModels="clr-namespace:AutoPick.ViewModels"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              d:DataContext="{d:DesignInstance ViewModels:GameTrackViewModel}"
-             mc:Ignorable="d"/>
+             mc:Ignorable="d">
+    <DockPanel>
+        <ContentControl Margin="0,5"
+                        HorizontalAlignment="Center"
+                        DockPanel.Dock="Bottom">
+            <ContentControl.Style>
+                <Style TargetType="ContentControl">
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding Status}"
+                                     Value="{x:Static Models:GameStatus.Offline}">
+                            <DataTrigger.Setters>
+                                <Setter Property="Content">
+                                    <Setter.Value>
+                                        <StackPanel Orientation="Horizontal">
+                                            <Image Source="{StaticResource Error}"
+                                                   Style="{StaticResource Image.Status}"/>
+                                            <TextBlock Style="{StaticResource TextBlock.Status}"
+                                                       Text="Your game is offline."/>
+                                        </StackPanel>
+                                    </Setter.Value>
+                                </Setter>
+                            </DataTrigger.Setters>
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding Status}"
+                                     Value="{x:Static Models:GameStatus.Minimised}">
+                            <DataTrigger.Setters>
+                                <Setter Property="Content">
+                                    <Setter.Value>
+                                        <StackPanel Orientation="Horizontal">
+                                            <Image Source="{StaticResource Error}"
+                                                   Style="{StaticResource Image.Status}"/>
+                                            <TextBlock Style="{StaticResource TextBlock.Status}"
+                                                       TextAlignment="Center">
+                                                Your game is minimised.<LineBreak/>
+                                                AutoPick cannot capture a minimised window, as it is not drawn.<LineBreak/>
+                                                Please keep the window open.</TextBlock>
+                                        </StackPanel>
+                                    </Setter.Value>
+                                </Setter>
+                            </DataTrigger.Setters>
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding Status}"
+                                     Value="{x:Static Models:GameStatus.Idle}">
+                            <DataTrigger.Setters>
+                                <Setter Property="Content">
+                                    <Setter.Value>
+                                        <StackPanel Orientation="Horizontal">
+                                            <Image Source="{StaticResource Snail}"
+                                                   Style="{StaticResource Image.Status}"/>
+                                            <TextBlock Style="{StaticResource TextBlock.Status}"
+                                                       Text="You are idle. Join a lobby to proceed."/>
+                                        </StackPanel>
+                                    </Setter.Value>
+                                </Setter>
+                            </DataTrigger.Setters>
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding Status}"
+                                     Value="{x:Static Models:GameStatus.InLobby}">
+                            <DataTrigger.Setters>
+                                <Setter Property="Content">
+                                    <Setter.Value>
+                                        <StackPanel Orientation="Horizontal">
+                                            <Image Source="{StaticResource Snail}"
+                                                   Style="{StaticResource Image.Status}"/>
+                                            <TextBlock Style="{StaticResource TextBlock.Status}"
+                                                       Text="Awaiting queue."/>
+                                        </StackPanel>
+                                    </Setter.Value>
+                                </Setter>
+                            </DataTrigger.Setters>
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding Status}"
+                                     Value="{x:Static Models:GameStatus.Searching}">
+                            <DataTrigger.Setters>
+                                <Setter Property="Content">
+                                    <Setter.Value>
+                                        <StackPanel Orientation="Horizontal">
+                                            <LoadingIndicators:LoadingIndicator Style="{StaticResource LoadingIndicator.Status}"/>
+                                            <TextBlock Style="{StaticResource TextBlock.Status}"
+                                                       Text="Polling game for accept screen."/>
+                                        </StackPanel>
+                                    </Setter.Value>
+                                </Setter>
+                            </DataTrigger.Setters>
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding Status}"
+                                     Value="{x:Static Models:GameStatus.AcceptingMatch}">
+                            <DataTrigger.Setters>
+                                <Setter Property="Content">
+                                    <Setter.Value>
+                                        <StackPanel Orientation="Horizontal">
+                                            <LoadingIndicators:LoadingIndicator Style="{StaticResource LoadingIndicator.Status}"/>
+                                            <TextBlock Style="{StaticResource TextBlock.Status}"
+                                                       Text="Found accept screen. Accepting match."/>
+                                        </StackPanel>
+                                    </Setter.Value>
+                                </Setter>
+                            </DataTrigger.Setters>
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding Status}"
+                                     Value="{x:Static Models:GameStatus.PickingLane}">
+                            <DataTrigger.Setters>
+                                <Setter Property="Content">
+                                    <Setter.Value>
+                                        <StackPanel Orientation="Horizontal">
+                                            <LoadingIndicators:LoadingIndicator Style="{StaticResource LoadingIndicator.Status}"/>
+                                            <TextBlock Style="{StaticResource TextBlock.Status}"
+                                                       Text="Entered pick screen. Auto-picking selected role."/>
+                                        </StackPanel>
+                                    </Setter.Value>
+                                </Setter>
+                            </DataTrigger.Setters>
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding Status}"
+                                     Value="{x:Static Models:GameStatus.ChampionSelect}">
+                            <DataTrigger.Setters>
+                                <Setter Property="Content">
+                                    <Setter.Value>
+                                        <StackPanel Orientation="Horizontal">
+                                            <Image Source="{StaticResource Tick}"
+                                                   Style="{StaticResource Image.Status}"/>
+                                            <TextBlock Style="{StaticResource TextBlock.Status}"
+                                                       Text="Finished picking. Awaiting game start."/>
+                                        </StackPanel>
+                                    </Setter.Value>
+                                </Setter>
+                            </DataTrigger.Setters>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </ContentControl.Style>
+        </ContentControl>
+
+        <Image Source="{Binding Image}"/>
+    </DockPanel>
+</UserControl>
