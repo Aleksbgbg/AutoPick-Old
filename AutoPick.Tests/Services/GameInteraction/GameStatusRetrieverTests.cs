@@ -1,31 +1,30 @@
-﻿namespace AutoPick.Tests.Services
+﻿namespace AutoPick.Tests.Services.GameInteraction
 {
     using System;
     using System.Windows.Media.Imaging;
 
     using AutoPick.Models;
-    using AutoPick.Services;
-    using AutoPick.Services.Interfaces;
+    using AutoPick.Services.GameInteraction;
 
     using Moq;
 
     using Xunit;
 
-    public class GamePollerTests
+    public class GameStatusRetrieverTests
     {
-        private readonly Mock<IWin32Kit> _win32KitMock;
+        private readonly Mock<IGameWindowManager> _gameWindowManagerMock;
 
         private readonly Mock<IGameImageProcessor> _gameImageProcessorMock;
 
-        private readonly GamePoller _gamePoller;
+        private readonly GameStatusRetriever _gameStatusRetriever;
 
-        public GamePollerTests()
+        public GameStatusRetrieverTests()
         {
-            _win32KitMock = new Mock<IWin32Kit>(MockBehavior.Strict);
+            _gameWindowManagerMock = new Mock<IGameWindowManager>(MockBehavior.Strict);
 
             _gameImageProcessorMock = new Mock<IGameImageProcessor>();
 
-            _gamePoller = new GamePoller(_win32KitMock.Object, _gameImageProcessorMock.Object);
+            _gameStatusRetriever = new GameStatusRetriever(_gameWindowManagerMock.Object, _gameImageProcessorMock.Object);
         }
 
         [Fact]
@@ -33,7 +32,7 @@
         {
             SetupWindowInactive();
 
-            var status = _gamePoller.GetCurrentStatus();
+            var status = _gameStatusRetriever.GetCurrentStatus();
 
             Assert.Null(status.GameImage);
             Assert.Equal(GameStatus.Offline, status.GameStatus);
@@ -44,7 +43,7 @@
         {
             SetupWindowMinimised();
 
-            var status = _gamePoller.GetCurrentStatus();
+            var status = _gameStatusRetriever.GetCurrentStatus();
 
             Assert.Null(status.GameImage);
             Assert.Equal(GameStatus.Minimised, status.GameStatus);
@@ -55,7 +54,7 @@
         {
             var expectedUpdate = SetupWindowActiveAndMaximised();
 
-            var actualUpdate = _gamePoller.GetCurrentStatus();
+            var actualUpdate = _gameStatusRetriever.GetCurrentStatus();
 
             Assert.Equal(expectedUpdate.GameStatus, actualUpdate.GameStatus);
             Assert.Equal(expectedUpdate.GameImage, actualUpdate.GameImage);
@@ -66,7 +65,7 @@
         {
             IntPtr image = SetupReleaseCaptureInSequence();
 
-            _gamePoller.GetCurrentStatus();
+            _gameStatusRetriever.GetCurrentStatus();
 
             VerifyReleaseCapture(image);
         }
@@ -86,7 +85,7 @@
         {
             SetupWindowActive(true);
             SetupWindowMinimised(false);
-            _win32KitMock.Setup(kit => kit.ReleaseWindowCapture(It.IsAny<IntPtr>()));
+            _gameWindowManagerMock.Setup(manager => manager.ReleaseWindowCapture(It.IsAny<IntPtr>()));
 
             var image = SetupWindowCapture();
             var status = SetupGameStatusFromImage(image);
@@ -96,22 +95,22 @@
 
         private void SetupWindowActive(bool isActive)
         {
-            _win32KitMock.Setup(kit => kit.IsWindowActive())
-                         .Returns(isActive);
+            _gameWindowManagerMock.Setup(manager => manager.IsWindowActive())
+                                  .Returns(isActive);
         }
 
         private void SetupWindowMinimised(bool isMinimised)
         {
-            _win32KitMock.Setup(kit => kit.IsWindowMinimised())
-                         .Returns(isMinimised);
+            _gameWindowManagerMock.Setup(manager => manager.IsWindowMinimised())
+                                  .Returns(isMinimised);
         }
 
         private IntPtr SetupWindowCapture()
         {
             IntPtr image = IntPtr.Zero;
 
-            _win32KitMock.Setup(kit => kit.CaptureWindow())
-                         .Returns(image);
+            _gameWindowManagerMock.Setup(manager => manager.CaptureWindow())
+                                  .Returns(image);
 
             return image;
         }
@@ -121,7 +120,7 @@
             GameStatusUpdate status = new GameStatusUpdate(GameStatus.AcceptingMatch,
                                                            new BitmapImage());
 
-            _gameImageProcessorMock.Setup(analyser => analyser.ProcessGameImage(image))
+            _gameImageProcessorMock.Setup(processor => processor.ProcessGameImage(image))
                                    .Returns(status);
 
             return status;
@@ -136,22 +135,22 @@
 
             IntPtr image = IntPtr.Zero;
 
-            _win32KitMock.InSequence(sequence)
-                         .Setup(kit => kit.CaptureWindow())
-                         .Returns(image);
+            _gameWindowManagerMock.InSequence(sequence)
+                                  .Setup(manager => manager.CaptureWindow())
+                                  .Returns(image);
 
             _gameImageProcessorMock.InSequence(sequence)
                                    .Setup(processor => processor.ProcessGameImage(image));
 
-            _win32KitMock.InSequence(sequence)
-                         .Setup(kit => kit.ReleaseWindowCapture(image));
+            _gameWindowManagerMock.InSequence(sequence)
+                                  .Setup(manager => manager.ReleaseWindowCapture(image));
 
             return image;
         }
 
         private void VerifyReleaseCapture(IntPtr image)
         {
-            _win32KitMock.Verify(kit => kit.ReleaseWindowCapture(image), Times.Once);
+            _gameWindowManagerMock.Verify(manager => manager.ReleaseWindowCapture(image), Times.Once);
         }
     }
 }

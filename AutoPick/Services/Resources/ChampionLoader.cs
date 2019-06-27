@@ -1,9 +1,8 @@
-﻿namespace AutoPick.Services
+﻿namespace AutoPick.Services.Resources
 {
     using System.Linq;
 
     using AutoPick.Models;
-    using AutoPick.Services.Interfaces;
 
     public class ChampionLoader : IChampionLoader
     {

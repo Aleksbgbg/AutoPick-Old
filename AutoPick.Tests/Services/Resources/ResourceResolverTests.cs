@@ -1,8 +1,7 @@
-﻿namespace AutoPick.Tests.Services
+﻿namespace AutoPick.Tests.Services.Resources
 {
     using AutoPick.Models;
-    using AutoPick.Services;
-    using AutoPick.Services.Interfaces;
+    using AutoPick.Services.Resources;
 
     using Moq;
 

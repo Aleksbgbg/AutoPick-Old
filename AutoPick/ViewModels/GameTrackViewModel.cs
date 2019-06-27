@@ -3,14 +3,14 @@
     using System.Windows.Media;
 
     using AutoPick.Models;
-    using AutoPick.Services.Interfaces;
+    using AutoPick.Services.GameInteraction;
     using AutoPick.ViewModels.Interfaces;
 
     public class GameTrackViewModel : ViewModelBase, IGameTrackViewModel
     {
-        public GameTrackViewModel(IGamePollService gamePollService)
+        public GameTrackViewModel(IGameMonitor gameMonitor)
         {
-            gamePollService.GameUpdated += HandleStatusUpdate;
+            gameMonitor.GameUpdated += HandleStatusUpdate;
         }
 
         private ImageSource _image;

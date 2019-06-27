@@ -1,4 +1,4 @@
-﻿namespace AutoPick.Services.Interfaces
+﻿namespace AutoPick.Services.Resources
 {
     using AutoPick.Models;
 

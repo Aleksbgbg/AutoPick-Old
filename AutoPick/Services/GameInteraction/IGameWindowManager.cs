@@ -1,8 +1,8 @@
-﻿namespace AutoPick.Services.Interfaces
+﻿namespace AutoPick.Services.GameInteraction
 {
     using System;
 
-    public interface IWin32Kit
+    public interface IGameWindowManager
     {
         bool IsWindowActive();
 

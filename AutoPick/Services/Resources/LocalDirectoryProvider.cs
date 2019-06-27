@@ -1,8 +1,6 @@
-﻿namespace AutoPick.Services
+﻿namespace AutoPick.Services.Resources
 {
     using System;
-
-    using AutoPick.Services.Interfaces;
 
     public class LocalDirectoryProvider : ILocalDirectoryProvider
     {

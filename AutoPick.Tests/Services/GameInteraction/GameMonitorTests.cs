@@ -1,32 +1,31 @@
-﻿namespace AutoPick.Tests.Services
+﻿namespace AutoPick.Tests.Services.GameInteraction
 {
     using AutoPick.Models;
-    using AutoPick.Services;
-    using AutoPick.Services.Interfaces;
+    using AutoPick.Services.GameInteraction;
 
     using Moq;
 
     using Xunit;
 
-    public class GamePollServiceTests
+    public class GameMonitorTests
     {
         private const int StartupDelay = 2000;
 
         private Mock<IThreadRunner> _threadRunnerMock;
 
-        private Mock<IGamePoller> _gamePollerMock;
+        private readonly Mock<IGameStatusRetriever> _gameStatusRetrieverMock;
 
-        private GamePollService _gamePollService;
+        private GameMonitor _gameMonitor;
 
         private GameStatusUpdate _gameStatusUpdate;
 
-        public GamePollServiceTests()
+        public GameMonitorTests()
         {
             _threadRunnerMock = new Mock<IThreadRunner>();
 
-            _gamePollerMock = new Mock<IGamePoller>();
+            _gameStatusRetrieverMock = new Mock<IGameStatusRetriever>();
 
-            _gamePollService = Create();
+            _gameMonitor = Create();
         }
 
         [Fact]
@@ -68,9 +67,9 @@
             VerifySetDelay(delay);
         }
 
-        private GamePollService Create()
+        private GameMonitor Create()
         {
-            return _gamePollService = new GamePollService(_threadRunnerMock.Object, _gamePollerMock.Object);
+            return _gameMonitor = new GameMonitor(_threadRunnerMock.Object, _gameStatusRetrieverMock.Object);
         }
 
         private void SetupSetDelayThenStart(int delay)
@@ -93,15 +92,15 @@
 
         private void SetupCaptureGameStatusUpdate()
         {
-            _gamePollService.GameUpdated += update => _gameStatusUpdate = update;
+            _gameMonitor.GameUpdated += update => _gameStatusUpdate = update;
         }
 
         private GameStatusUpdate SetupStatusUpdate(GameStatus status)
         {
             GameStatusUpdate gameStatusUpdate = new GameStatusUpdate(status, null);
 
-            _gamePollerMock.Setup(poller => poller.GetCurrentStatus())
-                           .Returns(gameStatusUpdate);
+            _gameStatusRetrieverMock.Setup(retriever => retriever.GetCurrentStatus())
+                                    .Returns(gameStatusUpdate);
 
             return gameStatusUpdate;
         }

@@ -1,7 +1,7 @@
 ﻿namespace AutoPick.Converters
 {
     using AutoPick.Models;
-    using AutoPick.Services.Interfaces;
+    using AutoPick.Services.Resources;
 
     using Caliburn.Micro;
 

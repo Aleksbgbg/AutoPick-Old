@@ -1,7 +1,7 @@
 ﻿namespace AutoPick
 {
-    using AutoPick.Services;
-    using AutoPick.Services.Interfaces;
+    using AutoPick.Services.GameInteraction;
+    using AutoPick.Services.Resources;
     using AutoPick.ViewModels;
     using AutoPick.ViewModels.Interfaces;
 
@@ -26,13 +26,13 @@
             dependencyRegistrar.Singleton<IResourceReader, ResourceReader>();
             dependencyRegistrar.Singleton<ILocalDirectoryProvider, LocalDirectoryProvider>();
             dependencyRegistrar.Singleton<ILaneLoader, LaneLoader>();
-            dependencyRegistrar.Singleton<IGamePollService, GamePollService>();
+            dependencyRegistrar.Singleton<IGameMonitor, GameMonitor>();
             dependencyRegistrar.Singleton<IThreadRunner, ThreadRunner>();
-            dependencyRegistrar.Singleton<IGamePoller, GamePoller>();
+            dependencyRegistrar.Singleton<IGameStatusRetriever, GameStatusRetriever>();
 
             dependencyRegistrar.Singleton<Win32Kit, Win32Kit>();
-            dependencyRegistrar.Handler<IWin32Kit>(retriever => retriever.GetInstance<Win32Kit>());
-            dependencyRegistrar.Handler<IWindowClicker>(retriever => retriever.GetInstance<Win32Kit>());
+            dependencyRegistrar.Handler<IGameWindowManager>(retriever => retriever.GetInstance<Win32Kit>());
+            dependencyRegistrar.Handler<IGameWindowClicker>(retriever => retriever.GetInstance<Win32Kit>());
         }
     }
 }

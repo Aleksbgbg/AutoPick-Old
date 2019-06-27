@@ -4,7 +4,7 @@
     using System.Windows.Media.Imaging;
 
     using AutoPick.Models;
-    using AutoPick.Services.Interfaces;
+    using AutoPick.Services.GameInteraction;
     using AutoPick.ViewModels;
 
     using Moq;
@@ -13,15 +13,15 @@
 
     public class GameTrackViewModelTests
     {
-        private readonly Mock<IGamePollService> _gamePollServiceMock;
+        private readonly Mock<IGameMonitor> _gameMonitorMock;
 
         private readonly GameTrackViewModel _gameTrackViewModel;
 
         public GameTrackViewModelTests()
         {
-            _gamePollServiceMock = new Mock<IGamePollService>();
+            _gameMonitorMock = new Mock<IGameMonitor>();
 
-            _gameTrackViewModel = new GameTrackViewModel(_gamePollServiceMock.Object);
+            _gameTrackViewModel = new GameTrackViewModel(_gameMonitorMock.Object);
         }
 
         [Fact]
@@ -46,12 +46,12 @@
 
         private void RaiseGameUpdatedEvent(GameStatus status)
         {
-            _gamePollServiceMock.Raise(service => service.GameUpdated += null, (object)new GameStatusUpdate(status, gameImage: null));
+            _gameMonitorMock.Raise(monitor => monitor.GameUpdated += null, (object)new GameStatusUpdate(status, gameImage: null));
         }
 
         private void RaiseGameUpdatedEvent(ImageSource image)
         {
-            _gamePollServiceMock.Raise(service => service.GameUpdated += null, (object)new GameStatusUpdate(gameStatus: 0, image));
+            _gameMonitorMock.Raise(monitor => monitor.GameUpdated += null, (object)new GameStatusUpdate(gameStatus: 0, image));
         }
     }
 }

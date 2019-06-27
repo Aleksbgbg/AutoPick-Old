@@ -6,7 +6,7 @@
     using System.Windows.Data;
 
     using AutoPick.Models;
-    using AutoPick.Services.Interfaces;
+    using AutoPick.Services.Resources;
 
     public class ResourceImageConverter : IValueConverter
     {

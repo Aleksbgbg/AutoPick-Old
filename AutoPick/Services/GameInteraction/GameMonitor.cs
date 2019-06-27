@@ -1,20 +1,19 @@
-﻿namespace AutoPick.Services
+﻿namespace AutoPick.Services.GameInteraction
 {
     using System;
 
     using AutoPick.Models;
-    using AutoPick.Services.Interfaces;
 
-    public class GamePollService : IGamePollService
+    public class GameMonitor : IGameMonitor
     {
         private readonly IThreadRunner _threadRunner;
 
-        private readonly IGamePoller _gamePoller;
+        private readonly IGameStatusRetriever _gameStatusRetriever;
 
-        public GamePollService(IThreadRunner threadRunner, IGamePoller gamePoller)
+        public GameMonitor(IThreadRunner threadRunner, IGameStatusRetriever gameStatusRetriever)
         {
             _threadRunner = threadRunner;
-            _gamePoller = gamePoller;
+            _gameStatusRetriever = gameStatusRetriever;
 
             ChangeDelay(GameStatus.Offline);
             threadRunner.ThreadAwake += ThreadAwake;
@@ -23,7 +22,7 @@
 
         private void ThreadAwake()
         {
-            GameStatusUpdate gameStatusUpdate = _gamePoller.GetCurrentStatus();
+            GameStatusUpdate gameStatusUpdate = _gameStatusRetriever.GetCurrentStatus();
 
             GameUpdated?.Invoke(gameStatusUpdate);
 
@@ -50,7 +49,7 @@
                 case GameStatus.InLobby:
                 case GameStatus.Searching:
                 case GameStatus.ChampionSelect:
-                    newDelay = 5000;
+                    newDelay = 1000;
                     break;
 
                 case GameStatus.AcceptingMatch:

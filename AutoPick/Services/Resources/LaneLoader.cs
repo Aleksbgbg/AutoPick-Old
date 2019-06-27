@@ -1,7 +1,6 @@
-﻿namespace AutoPick.Services
+﻿namespace AutoPick.Services.Resources
 {
     using AutoPick.Models;
-    using AutoPick.Services.Interfaces;
 
     public class LaneLoader : ILaneLoader
     {

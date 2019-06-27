@@ -4,7 +4,7 @@
     using System.Linq;
 
     using AutoPick.Models;
-    using AutoPick.Services.Interfaces;
+    using AutoPick.Services.Resources;
     using AutoPick.ViewModels;
 
     using Moq;

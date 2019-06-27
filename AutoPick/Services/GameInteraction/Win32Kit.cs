@@ -1,11 +1,9 @@
-﻿namespace AutoPick.Services
+﻿namespace AutoPick.Services.GameInteraction
 {
     using System;
     using System.Runtime.InteropServices;
 
-    using AutoPick.Services.Interfaces;
-
-    public class Win32Kit : IWin32Kit, IWindowClicker
+    public class Win32Kit : IGameWindowManager, IGameWindowClicker
     {
         private const string DllName = "AutoPick.Win32.dll";
 

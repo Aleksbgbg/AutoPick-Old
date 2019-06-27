@@ -1,8 +1,6 @@
-﻿namespace AutoPick.Services.Interfaces
+﻿namespace AutoPick.Services.GameInteraction
 {
     using System;
-
-    using AutoPick.Models;
 
     public interface IGameImageProcessor
     {

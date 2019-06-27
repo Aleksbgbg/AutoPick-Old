@@ -1,8 +1,6 @@
-﻿namespace AutoPick.Services
+﻿namespace AutoPick.Services.Resources
 {
     using System.IO;
-
-    using AutoPick.Services.Interfaces;
 
     public class ResourceReader : IResourceReader
     {

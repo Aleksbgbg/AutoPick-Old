@@ -1,8 +1,6 @@
-﻿namespace AutoPick.Services
+﻿namespace AutoPick.Services.GameInteraction
 {
     using System.Threading.Tasks;
-
-    using AutoPick.Services.Interfaces;
 
     public class ThreadRunner : IThreadRunner
     {

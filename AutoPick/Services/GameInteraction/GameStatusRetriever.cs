@@ -1,39 +1,38 @@
-﻿namespace AutoPick.Services
+﻿namespace AutoPick.Services.GameInteraction
 {
     using System;
 
     using AutoPick.Models;
-    using AutoPick.Services.Interfaces;
 
-    public class GamePoller : IGamePoller
+    public class GameStatusRetriever : IGameStatusRetriever
     {
-        private readonly IWin32Kit _win32Kit;
+        private readonly IGameWindowManager _gameWindowManager;
 
         private readonly IGameImageProcessor _gameImageProcessor;
 
-        public GamePoller(IWin32Kit win32Kit, IGameImageProcessor gameImageProcessor)
+        public GameStatusRetriever(IGameWindowManager gameWindowManager, IGameImageProcessor gameImageProcessor)
         {
-            _win32Kit = win32Kit;
+            _gameWindowManager = gameWindowManager;
             _gameImageProcessor = gameImageProcessor;
         }
 
         public GameStatusUpdate GetCurrentStatus()
         {
-            if (!_win32Kit.IsWindowActive())
+            if (!_gameWindowManager.IsWindowActive())
             {
                 return new GameStatusUpdate(GameStatus.Offline, null);
             }
 
-            if (_win32Kit.IsWindowMinimised())
+            if (_gameWindowManager.IsWindowMinimised())
             {
                 return new GameStatusUpdate(GameStatus.Minimised, null);
             }
 
-            IntPtr gameImage = _win32Kit.CaptureWindow();
+            IntPtr gameImage = _gameWindowManager.CaptureWindow();
 
             GameStatusUpdate gameStatusUpdate = _gameImageProcessor.ProcessGameImage(gameImage);
 
-            _win32Kit.ReleaseWindowCapture(gameImage);
+            _gameWindowManager.ReleaseWindowCapture(gameImage);
 
             return gameStatusUpdate;
         }

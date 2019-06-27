@@ -1,10 +1,9 @@
-﻿namespace AutoPick.Services
+﻿namespace AutoPick.Services.Resources
 {
     using System;
     using System.IO;
 
     using AutoPick.Models;
-    using AutoPick.Services.Interfaces;
 
     public class ResourceResolver : IResourceResolver
     {

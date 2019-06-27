@@ -5,7 +5,7 @@
     using System.Windows.Data;
 
     using AutoPick.Models;
-    using AutoPick.Services.Interfaces;
+    using AutoPick.Services.Resources;
     using AutoPick.ViewModels.Interfaces;
 
     using Caliburn.Micro;

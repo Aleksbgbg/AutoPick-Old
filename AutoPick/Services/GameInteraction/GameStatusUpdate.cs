@@ -1,6 +1,8 @@
-﻿namespace AutoPick.Models
+﻿namespace AutoPick.Services.GameInteraction
 {
     using System.Windows.Media;
+
+    using AutoPick.Models;
 
     public class GameStatusUpdate
     {
