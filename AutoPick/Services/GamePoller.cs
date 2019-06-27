@@ -31,7 +31,11 @@
 
             IntPtr gameImage = _win32Kit.CaptureWindow();
 
-            return _gameImageProcessor.ProcessGameImage(gameImage);
+            GameStatusUpdate gameStatusUpdate = _gameImageProcessor.ProcessGameImage(gameImage);
+
+            _win32Kit.ReleaseWindowCapture(gameImage);
+
+            return gameStatusUpdate;
         }
     }
 }

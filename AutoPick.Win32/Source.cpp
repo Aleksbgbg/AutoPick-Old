@@ -1,57 +1,50 @@
 #define EXTERN_DECL extern "C" __declspec(dllexport)
-#define CALL_CDECL __cdecl
+#define CALL_CONV __cdecl
 
 #include <Windows.h>
-
-struct BitmapCreation
-{
-	HWND sourceWindow;
-	HDC sourceDeviceContext;
-	HDC targetDeviceContext;
-	HBITMAP bitmap;
-};
 
 HWND AutoPick_FindWindow(LPCSTR windowName)
 {
 	return FindWindow(nullptr, windowName);
 }
 
-EXTERN_DECL bool CALL_CDECL IsWindowOpen(LPCSTR windowName)
+EXTERN_DECL bool CALL_CONV IsWindowOpen(LPCSTR windowName)
 {
 	return AutoPick_FindWindow(windowName) != nullptr;
 }
 
-EXTERN_DECL BitmapCreation CALL_CDECL ScreenshotWindowByName(LPCSTR windowName)
+EXTERN_DECL bool CALL_CONV IsWindowMinimised(LPCSTR windowName)
 {
-	HWND window = AutoPick_FindWindow(windowName);
+	return IsWindowVisible(AutoPick_FindWindow(windowName)) == 0;
+}
 
-	HDC sourceDeviceContext = GetDC(window);
+EXTERN_DECL HBITMAP CALL_CONV CaptureWindow(LPCSTR windowName)
+{
+	HWND hwnd = AutoPick_FindWindow(windowName);
+
+	HDC sourceDeviceContext = GetDC(hwnd);
 	HDC targetDeviceContext = CreateCompatibleDC(sourceDeviceContext);
 
 	RECT windowRect{ };
-	GetWindowRect(window, &windowRect);
+	GetWindowRect(hwnd, &windowRect);
 
-	HBITMAP bitmap = CreateCompatibleBitmap(
+	HBITMAP bitmap = CreateCompatibleBitmap
+	(
 		sourceDeviceContext,
 		windowRect.right - windowRect.left,
 		windowRect.bottom - windowRect.top
 	);
 	SelectObject(targetDeviceContext, bitmap);
 
-	PrintWindow(window, targetDeviceContext, PW_CLIENTONLY);
+	PrintWindow(hwnd, targetDeviceContext, PW_CLIENTONLY);
 
-	BitmapCreation bitmapCreation;
-	bitmapCreation.sourceWindow = window;
-	bitmapCreation.sourceDeviceContext = sourceDeviceContext;
-	bitmapCreation.targetDeviceContext = targetDeviceContext;
-	bitmapCreation.bitmap = bitmap;
+	ReleaseDC(hwnd, sourceDeviceContext);
+	DeleteDC(targetDeviceContext);
 
-	return bitmapCreation;
+	return bitmap;
 }
 
-EXTERN_DECL void CALL_CDECL CleanUpBitmapCreation(const BitmapCreation& bitmapCreation)
+EXTERN_DECL void CALL_CONV CleanUpWindowCapture(HBITMAP bitmap)
 {
-	ReleaseDC(bitmapCreation.sourceWindow, bitmapCreation.sourceDeviceContext);
-	DeleteDC(bitmapCreation.targetDeviceContext);
-	DeleteObject(bitmapCreation.bitmap);
+	DeleteObject(bitmap);
 }

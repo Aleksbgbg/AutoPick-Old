@@ -9,5 +9,7 @@
         bool IsWindowMinimised();
 
         IntPtr CaptureWindow();
+
+        void ReleaseWindowCapture(IntPtr windowCapture);
     }
 }

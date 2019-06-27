@@ -21,7 +21,7 @@
 
         public GamePollerTests()
         {
-            _win32KitMock = new Mock<IWin32Kit>();
+            _win32KitMock = new Mock<IWin32Kit>(MockBehavior.Strict);
 
             _gameImageProcessorMock = new Mock<IGameImageProcessor>();
 
@@ -61,6 +61,16 @@
             Assert.Equal(expectedUpdate.GameImage, actualUpdate.GameImage);
         }
 
+        [Fact]
+        public void TestReleasesWindowCaptureAfterProcessing()
+        {
+            IntPtr image = SetupReleaseCaptureInSequence();
+
+            _gamePoller.GetCurrentStatus();
+
+            VerifyReleaseCapture(image);
+        }
+
         private void SetupWindowInactive()
         {
             SetupWindowActive(false);
@@ -76,6 +86,7 @@
         {
             SetupWindowActive(true);
             SetupWindowMinimised(false);
+            _win32KitMock.Setup(kit => kit.ReleaseWindowCapture(It.IsAny<IntPtr>()));
 
             var image = SetupWindowCapture();
             var status = SetupGameStatusFromImage(image);
@@ -114,6 +125,33 @@
                                    .Returns(status);
 
             return status;
+        }
+
+        private IntPtr SetupReleaseCaptureInSequence()
+        {
+            SetupWindowActive(true);
+            SetupWindowMinimised(false);
+
+            var sequence = new MockSequence();
+
+            IntPtr image = IntPtr.Zero;
+
+            _win32KitMock.InSequence(sequence)
+                         .Setup(kit => kit.CaptureWindow())
+                         .Returns(image);
+
+            _gameImageProcessorMock.InSequence(sequence)
+                                   .Setup(processor => processor.ProcessGameImage(image));
+
+            _win32KitMock.InSequence(sequence)
+                         .Setup(kit => kit.ReleaseWindowCapture(image));
+
+            return image;
+        }
+
+        private void VerifyReleaseCapture(IntPtr image)
+        {
+            _win32KitMock.Verify(kit => kit.ReleaseWindowCapture(image), Times.Once);
         }
     }
 }
