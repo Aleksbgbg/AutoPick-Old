@@ -1,6 +1,7 @@
 ﻿namespace AutoPick
 {
     using AutoPick.Services.GameInteraction;
+    using AutoPick.Services.GameInteraction.ImageProcessing;
     using AutoPick.Services.Resources;
     using AutoPick.ViewModels;
     using AutoPick.ViewModels.Interfaces;
@@ -33,6 +34,8 @@
             dependencyRegistrar.Singleton<Win32Kit, Win32Kit>();
             dependencyRegistrar.Handler<IGameWindowManager>(retriever => retriever.GetInstance<Win32Kit>());
             dependencyRegistrar.Handler<IGameWindowClicker>(retriever => retriever.GetInstance<Win32Kit>());
+
+            dependencyRegistrar.Singleton<IToImageConverter, ToImageConverter>();
         }
     }
 }
