@@ -1,5 +1,6 @@
 ﻿namespace AutoPick.Services.GameInteraction
 {
+    using System;
     using System.Threading.Tasks;
 
     public class ThreadRunner : IThreadRunner
@@ -22,7 +23,21 @@
         {
             while (true)
             {
+#if DEBUG
+                try
+                {
+                    ThreadAwake?.Invoke();
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e);
+                    throw;
+                }
+
+#else
                 ThreadAwake?.Invoke();
+#endif
+
                 await Task.Delay(_delay);
             }
         }
