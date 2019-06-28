@@ -36,10 +36,10 @@
 
                 TakeAction(result.MatchArea);
 
-                return new ImageProcessingResult(true, _gameStatus, image);
+                return new ImageProcessingResult(_gameStatus, image);
             }
 
-            return new ImageProcessingResult();
+            return ImageProcessingResult.Failed;
         }
 
         private protected virtual void TakeAction(Rectangle matchArea)

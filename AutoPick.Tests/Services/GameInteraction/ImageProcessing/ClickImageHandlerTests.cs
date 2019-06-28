@@ -43,7 +43,7 @@
         private void SetupImageMatch(int x, int y)
         {
             _imageMock.Setup(image => image.MatchTemplate(It.IsAny<IImage>(), It.IsAny<double>()))
-                      .Returns(new TemplateMatchResult(true, new Rectangle(x, y, 0, 0)));
+                      .Returns(new TemplateMatchResult(new Rectangle(x, y, 0, 0)));
         }
 
         private void ProcessImage()

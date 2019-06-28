@@ -59,15 +59,15 @@
 
         private IImage SetupImageHandling()
         {
-            return SetupImageHandling(image => new ImageProcessingResult(),
-                                      image => new ImageProcessingResult(true, ExpectedStatus, image)
+            return SetupImageHandling(image => ImageProcessingResult.Failed,
+                                      image => new ImageProcessingResult(ExpectedStatus, image)
                    );
         }
 
         private IImage SetupImageHandlingNoneAvailable()
         {
-            return SetupImageHandling(image => new ImageProcessingResult(),
-                                      image => new ImageProcessingResult());
+            return SetupImageHandling(image => ImageProcessingResult.Failed,
+                                      image => ImageProcessingResult.Failed);
         }
 
         private IImage SetupImageHandling(params Func<IImage, ImageProcessingResult>[] results)

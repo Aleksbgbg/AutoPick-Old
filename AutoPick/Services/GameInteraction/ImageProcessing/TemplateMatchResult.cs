@@ -4,15 +4,17 @@
 
     public class TemplateMatchResult
     {
-        public TemplateMatchResult()
+        public TemplateMatchResult(Rectangle matchArea)
+        {
+            IsMatch = true;
+            MatchArea = matchArea;
+        }
+
+        private TemplateMatchResult()
         {
         }
 
-        public TemplateMatchResult(bool isMatch, Rectangle matchArea)
-        {
-            IsMatch = isMatch;
-            MatchArea = matchArea;
-        }
+        public static TemplateMatchResult Failed { get; } = new TemplateMatchResult();
 
         public bool IsMatch { get; }
 

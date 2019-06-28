@@ -77,7 +77,7 @@
         public void TestReturnsFalseResultOnFailure()
         {
             IImage image = SetupImageDoesNotMatchTemplate();
-            var defaultProcessingResult = new ImageProcessingResult();
+            var defaultProcessingResult = ImageProcessingResult.Failed;
 
             var processingResult = ImageHandlerBase().ProcessImage(image);
 
@@ -140,7 +140,7 @@
             _imageMock = new Mock<IImage>();
 
             _imageMock.Setup(image => image.MatchTemplate(_templateMock.Object, It.IsInRange(0.75, 0.95, Range.Inclusive)))
-                      .Returns(new TemplateMatchResult(isMatch, matchRectangle));
+                      .Returns(isMatch ? new TemplateMatchResult(matchRectangle) : TemplateMatchResult.Failed);
 
             return _imageMock;
         }

@@ -61,11 +61,11 @@
                 {
                     Rectangle matchArea = new Rectangle(maxLocations[0], new Size(template.Width, template.Height));
 
-                    return new TemplateMatchResult(true, matchArea);
+                    return new TemplateMatchResult(matchArea);
                 }
             }
 
-            return new TemplateMatchResult();
+            return TemplateMatchResult.Failed;
         }
 
         public BitmapSource ToBitmapImage()

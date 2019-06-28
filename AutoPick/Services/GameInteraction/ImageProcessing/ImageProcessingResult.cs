@@ -4,16 +4,18 @@
 
     public class ImageProcessingResult
     {
-        public ImageProcessingResult() : this(default, default, default)
+        public ImageProcessingResult(GameStatus gameStatus, IImage resultantImage)
         {
-        }
-
-        public ImageProcessingResult(bool succeeded, GameStatus gameStatus, IImage resultantImage)
-        {
-            Succeeded = succeeded;
+            Succeeded = true;
             GameStatus = gameStatus;
             ResultantImage = resultantImage;
         }
+
+        private ImageProcessingResult()
+        {
+        }
+
+        public static ImageProcessingResult Failed { get; } = new ImageProcessingResult();
 
         public bool Succeeded { get; }
 
