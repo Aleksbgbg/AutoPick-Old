@@ -121,7 +121,6 @@
     <Compile Include="Services\GameInteraction\ImageProcessing\DefaultImageHandler.cs" />
     <Compile Include="Services\GameInteraction\ImageProcessing\GameImageProcessor.cs" />
     <Compile Include="Services\GameInteraction\GameStatusUpdate.cs" />
-    <Compile Include="Services\GameInteraction\ImageProcessing\IFromImageConverter.cs" />
     <Compile Include="Services\GameInteraction\ImageProcessing\IImage.cs" />
     <Compile Include="Services\GameInteraction\ImageProcessing\ImageHandlerBase.cs" />
     <Compile Include="Services\GameInteraction\ImageProcessing\IToImageConverter.cs" />

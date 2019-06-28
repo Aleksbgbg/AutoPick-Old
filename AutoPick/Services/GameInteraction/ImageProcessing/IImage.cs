@@ -1,6 +1,7 @@
 ﻿namespace AutoPick.Services.GameInteraction.ImageProcessing
 {
     using System.Drawing;
+    using System.Windows.Media.Imaging;
 
     public interface IImage
     {
@@ -13,5 +14,7 @@
         void Resize(double scale);
 
         TemplateMatchResult MatchTemplate(IImage template, double threshold);
+
+        BitmapImage ToBitmapImage();
     }
 }

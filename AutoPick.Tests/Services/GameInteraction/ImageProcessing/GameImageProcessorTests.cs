@@ -18,29 +18,25 @@
 
         private readonly Mock<IImageHandlerFactory> _imageHandlerFactory;
 
-        private readonly Mock<IFromImageConverter> _fromImageConverterMock;
-
-        private GameImageProcessor _gameImageProcessor;
-
         private Mock<IImageHandler>[] _imageHandlerMocks;
+
+        private Mock<IImage> _imageMock;
 
         public GameImageProcessorTests()
         {
             _imageHandlerFactory = new Mock<IImageHandlerFactory>();
-
-            _fromImageConverterMock = new Mock<IFromImageConverter>();
         }
 
         private GameImageProcessor GameImageProcessor()
         {
-            return _gameImageProcessor = new GameImageProcessor(_fromImageConverterMock.Object, _imageHandlerFactory.Object);
+            return new GameImageProcessor(_imageHandlerFactory.Object);
         }
 
         [Fact]
         public void TestGoesThrowAllImageHandlers()
         {
             IImage image = SetupImageHandling();
-            ImageSource imageSource = SetupImageConversion(image);
+            ImageSource imageSource = SetupImageConversion();
 
             var gameStatusUpdate = GameImageProcessor().ProcessGameImage(image);
 
@@ -53,7 +49,7 @@
         public void TestReturnsDefaultWhenNoHandlersAvailable()
         {
             IImage image = SetupImageHandlingNoneAvailable();
-            ImageSource imageSource = SetupImageConversion(image);
+            ImageSource imageSource = SetupImageConversion();
 
             var gameStatusUpdate = GameImageProcessor().ProcessGameImage(image);
 
@@ -76,7 +72,9 @@
 
         private IImage SetupImageHandling(params Func<IImage, ImageProcessingResult>[] results)
         {
-            IImage image = new Mock<IImage>().Object;
+            _imageMock = new Mock<IImage>();
+
+            IImage image = _imageMock.Object;
 
             _imageHandlerMocks = results.Select(result => SetupImageHandler(image, result(image))).ToArray();
 
@@ -96,14 +94,14 @@
             return imageHandlerMock;
         }
 
-        private ImageSource SetupImageConversion(IImage image)
+        private ImageSource SetupImageConversion()
         {
-            ImageSource imageSource = new BitmapImage();
+            BitmapImage bitmapImage = new BitmapImage();
 
-            _fromImageConverterMock.Setup(converter => converter.ImageSourceFrom(image))
-                                   .Returns(imageSource);
+            _imageMock.Setup(image => image.ToBitmapImage())
+                      .Returns(bitmapImage);
 
-            return imageSource;
+            return bitmapImage;
         }
 
         private void VerifyHandleImageWithAllHandlers(IImage image)

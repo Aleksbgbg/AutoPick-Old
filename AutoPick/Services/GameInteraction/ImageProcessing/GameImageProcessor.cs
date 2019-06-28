@@ -6,13 +6,10 @@
 
     public class GameImageProcessor : IGameImageProcessor
     {
-        private readonly IFromImageConverter _fromImageConverter;
-
         private readonly IImageHandler[] _imageHandlers;
 
-        public GameImageProcessor(IFromImageConverter fromImageConverter, IImageHandlerFactory imageHandlerFactory)
+        public GameImageProcessor(IImageHandlerFactory imageHandlerFactory)
         {
-            _fromImageConverter = fromImageConverter;
             _imageHandlers = imageHandlerFactory.LoadImageHandlers();
         }
 
@@ -33,8 +30,7 @@
 
         private GameStatusUpdate CreateStatusUpdate(GameStatus gameStatus, IImage image)
         {
-            ImageSource imageSource = _fromImageConverter.ImageSourceFrom(image);
-            return new GameStatusUpdate(gameStatus, imageSource);
+            return new GameStatusUpdate(gameStatus, image.ToBitmapImage());
         }
     }
 }
