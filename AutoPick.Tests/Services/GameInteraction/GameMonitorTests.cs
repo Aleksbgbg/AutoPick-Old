@@ -52,12 +52,12 @@
         [Theory]
         [InlineData(GameStatus.Offline, 2000)]
         [InlineData(GameStatus.Minimised, 1000)]
-        [InlineData(GameStatus.Idle, 5000)]
-        [InlineData(GameStatus.InLobby, 5000)]
-        [InlineData(GameStatus.Searching, 5000)]
+        [InlineData(GameStatus.Idle, 1000)]
+        [InlineData(GameStatus.InLobby, 1000)]
+        [InlineData(GameStatus.Searching, 1000)]
         [InlineData(GameStatus.AcceptingMatch, 100)]
         [InlineData(GameStatus.PickingLane, 100)]
-        [InlineData(GameStatus.ChampionSelect, 5000)]
+        [InlineData(GameStatus.ChampionSelect, 1000)]
         public void TestAccurateDelay(GameStatus status, int delay)
         {
             SetupStatusUpdate(status);
