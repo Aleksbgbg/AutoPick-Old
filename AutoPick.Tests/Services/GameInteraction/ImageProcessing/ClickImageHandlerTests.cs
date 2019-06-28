@@ -29,21 +29,23 @@
         }
 
         [Fact]
-        public void TestClick()
+        public void TestClicksCenter()
         {
             const int x = 500;
             const int y = 1200;
-            SetupImageMatch(x, y);
+            const int width = 100;
+            const int height = 10;
+            SetupImageMatch(x, y, width, height);
 
             ProcessImage();
 
-            VerifyClick(x, y);
+            VerifyClick(x + (width / 2), y + (height / 2));
         }
 
-        private void SetupImageMatch(int x, int y)
+        private void SetupImageMatch(int x, int y, int width, int height)
         {
             _imageMock.Setup(image => image.MatchTemplate(It.IsAny<IImage>(), It.IsAny<double>()))
-                      .Returns(new TemplateMatchResult(new Rectangle(x, y, 0, 0)));
+                      .Returns(new TemplateMatchResult(new Rectangle(x, y, width, height)));
         }
 
         private void ProcessImage()

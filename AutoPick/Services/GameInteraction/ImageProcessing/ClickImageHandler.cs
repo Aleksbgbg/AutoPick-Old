@@ -15,7 +15,7 @@
 
         private protected override void TakeAction(Rectangle matchArea)
         {
-            _gameWindowClicker.Click(matchArea.X, matchArea.Y);
+            _gameWindowClicker.Click(matchArea.X + (matchArea.Width / 2), matchArea.Y + (matchArea.Height / 2));
         }
     }
 }
