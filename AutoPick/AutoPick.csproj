@@ -118,6 +118,7 @@
     <Compile Include="Models\GameStatus.cs" />
     <Compile Include="Models\Lane.cs" />
     <Compile Include="Models\ResourceType.cs" />
+    <Compile Include="Services\GameInteraction\ImageProcessing\ClickImageHandler.cs" />
     <Compile Include="Services\GameInteraction\ImageProcessing\DefaultImageHandler.cs" />
     <Compile Include="Services\GameInteraction\ImageProcessing\EmguCvImage.cs" />
     <Compile Include="Services\GameInteraction\ImageProcessing\GameImageProcessor.cs" />
