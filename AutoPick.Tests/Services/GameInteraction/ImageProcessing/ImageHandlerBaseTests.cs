@@ -46,6 +46,21 @@
         }
 
         [Fact]
+        public void TestScaleFactorRelativeToOriginal()
+        {
+            const double scale = 2;
+            IImage scaledImage = SetupImageSize(DefaultImageSize.X * scale, DefaultImageSize.Y * scale);
+            IImage defaultImage = SetupImageSize(DefaultImageSize.X, DefaultImageSize.Y);
+
+            var imageHandler = ImageHandlerBase();
+            imageHandler.ProcessImage(scaledImage);
+            imageHandler.ProcessImage(defaultImage);
+
+            VerifyResize(scale);
+            VerifyResize(1);
+        }
+
+        [Fact]
         public void TestReturnsTrueResultOnSuccess()
         {
             IImage image = SetupImageMatchesTemplate();

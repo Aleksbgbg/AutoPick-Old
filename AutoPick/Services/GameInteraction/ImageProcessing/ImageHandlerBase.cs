@@ -16,6 +16,8 @@
 
         private readonly GameStatus _gameStatus;
 
+        private Vector2 _lastImageSize = DefaultImageSize;
+
         public ImageHandlerBase(IImage template, GameStatus gameStatus)
         {
             _template = template;
@@ -46,13 +48,17 @@
 
         private void ResizeTemplateToMatchImageDimensions(int width, int height)
         {
-            float defaultImageLength = DefaultImageSize.Length();
-            float actualImageLength = new Vector2(width, height).Length();
+            Vector2 currentImageSize = new Vector2(width, height);
 
-            if (Math.Abs(defaultImageLength - actualImageLength) > 0.01)
+            float lastImageLength = _lastImageSize.Length();
+            float actualImageLength = currentImageSize.Length();
+
+            if (Math.Abs(lastImageLength - actualImageLength) > 0.01)
             {
-                _template.Resize(actualImageLength / defaultImageLength);
+                _template.Resize(actualImageLength / DefaultImageSize.Length());
             }
+
+            _lastImageSize = currentImageSize;
         }
     }
 }
