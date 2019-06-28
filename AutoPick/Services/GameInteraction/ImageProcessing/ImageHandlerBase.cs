@@ -10,6 +10,8 @@
     {
         private const double MatchThreshold = 0.75;
 
+        private const int RectangleMargin = 3;
+
         private static readonly Vector2 DefaultImageSize = new Vector2(1024, 576);
 
         private readonly IImage _template;
@@ -32,7 +34,11 @@
 
             if (result.IsMatch)
             {
-                image.Draw(result.MatchArea);
+                Rectangle matchArea = result.MatchArea;
+                image.Draw(new Rectangle(matchArea.X - RectangleMargin,
+                                         matchArea.Y - RectangleMargin,
+                                         matchArea.Width + (2 * RectangleMargin),
+                                         matchArea.Height + (2 * RectangleMargin)));
 
                 TakeAction(result.MatchArea);
 

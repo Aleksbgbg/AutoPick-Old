@@ -13,6 +13,8 @@
 
     public class ImageHandlerBaseTests
     {
+        private const int RectangleMargin = 3;
+
         private static readonly Vector2 DefaultImageSize = new Vector2(1024, 576);
 
         private readonly Mock<IImage> _templateMock;
@@ -162,7 +164,11 @@
 
         private void VerifyDrawRectangleOnImage(Rectangle rectangle)
         {
-            _imageMock.Verify(image => image.Draw(rectangle), Times.Once);
+            _imageMock.Verify(image => image.Draw(new Rectangle(rectangle.X - RectangleMargin,
+                                                                rectangle.Y - RectangleMargin,
+                                                                rectangle.Width + (2 * RectangleMargin),
+                                                                rectangle.Height + (2 * RectangleMargin))),
+                              Times.Once);
         }
 
         private class ImageHandler : ImageHandlerBase
