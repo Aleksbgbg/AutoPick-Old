@@ -37,6 +37,7 @@
 
             dependencyRegistrar.Singleton<IGameImageProcessor, GameImageProcessor>();
             dependencyRegistrar.Singleton<IToImageConverter, ToImageConverter>();
+            dependencyRegistrar.Singleton<IImageHandlerFactory, ImageHandlerFactory>();
         }
     }
 }

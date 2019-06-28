@@ -125,6 +125,7 @@
     <Compile Include="Services\GameInteraction\GameStatusUpdate.cs" />
     <Compile Include="Services\GameInteraction\ImageProcessing\IImage.cs" />
     <Compile Include="Services\GameInteraction\ImageProcessing\ImageHandlerBase.cs" />
+    <Compile Include="Services\GameInteraction\ImageProcessing\ImageHandlerFactory.cs" />
     <Compile Include="Services\GameInteraction\ImageProcessing\IToImageConverter.cs" />
     <Compile Include="Services\GameInteraction\ImageProcessing\IImageHandler.cs" />
     <Compile Include="Services\GameInteraction\ImageProcessing\IImageHandlerFactory.cs" />
