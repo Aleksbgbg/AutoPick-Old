@@ -122,10 +122,12 @@
     <Compile Include="Services\GameInteraction\GameStatusUpdate.cs" />
     <Compile Include="Services\GameInteraction\ImageProcessing\IFromImageConverter.cs" />
     <Compile Include="Services\GameInteraction\ImageProcessing\IImage.cs" />
+    <Compile Include="Services\GameInteraction\ImageProcessing\ImageHandlerBase.cs" />
     <Compile Include="Services\GameInteraction\ImageProcessing\IToImageConverter.cs" />
     <Compile Include="Services\GameInteraction\ImageProcessing\IImageHandler.cs" />
     <Compile Include="Services\GameInteraction\ImageProcessing\IImageHandlerFactory.cs" />
     <Compile Include="Services\GameInteraction\ImageProcessing\ImageProcessingResult.cs" />
+    <Compile Include="Services\GameInteraction\ImageProcessing\TemplateMatchResult.cs" />
     <Compile Include="Services\Resources\ChampionLoader.cs" />
     <Compile Include="Services\GameInteraction\GameStatusRetriever.cs" />
     <Compile Include="Services\GameInteraction\GameMonitor.cs" />
