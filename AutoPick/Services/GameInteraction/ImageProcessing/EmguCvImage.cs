@@ -12,35 +12,44 @@
 
     public class EmguCvImage : IImage
     {
-        private readonly Image<Rgb, byte> _image;
+        private readonly Image<Rgb, byte> _originalImage;
+
+        private Image<Rgb, byte> _currentImage;
 
         public EmguCvImage(Bitmap bitmap)
         {
-            _image = new Image<Rgb, byte>(bitmap);
+            _originalImage = _currentImage = new Image<Rgb, byte>(bitmap);
         }
 
         public EmguCvImage(string filepath)
         {
-            _image = new Image<Rgb, byte>(filepath);
+            _originalImage = _currentImage = new Image<Rgb, byte>(filepath);
         }
 
-        public int Width => _image.Width;
+        public int Width => _currentImage.Width;
 
-        public int Height => _image.Height;
+        public int Height => _currentImage.Height;
 
         public void Draw(Rectangle rectangle)
         {
-            _image.Draw(rectangle, new Rgb(255, 0, 0), thickness: 3);
+            _currentImage.Draw(rectangle, new Rgb(255, 0, 0), thickness: 2);
         }
 
         public void Resize(double scale)
         {
-            _image.Resize(scale, Inter.Linear);
+            if (Math.Abs(scale - 1) < 0.1)
+            {
+                _currentImage = _originalImage;
+            }
+            else
+            {
+                _currentImage = _originalImage.Resize(scale, Inter.Linear);
+            }
         }
 
         public TemplateMatchResult MatchTemplate(IImage template, double threshold)
         {
-            using (Image<Gray, float> result = _image.MatchTemplate(template.ToCvImage(),
+            using (Image<Gray, float> result = _currentImage.MatchTemplate(template.ToCvImage(),
                                                                     TemplateMatchingType.CcoeffNormed))
             {
                 result.MinMax(out double[] minValues,
@@ -61,7 +70,7 @@
 
         public BitmapSource ToBitmapImage()
         {
-            using (Bitmap bitmap = _image.Bitmap)
+            using (Bitmap bitmap = _currentImage.Bitmap)
             {
                 IntPtr hbitmap = bitmap.GetHbitmap();
 
@@ -84,7 +93,7 @@
 
         public Image<Rgb, byte> ToCvImage()
         {
-            return _image;
+            return _currentImage;
         }
 
         [DllImport("GDI32.dll")]
