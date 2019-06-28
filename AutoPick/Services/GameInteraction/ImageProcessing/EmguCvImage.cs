@@ -1,8 +1,9 @@
 ﻿namespace AutoPick.Services.GameInteraction.ImageProcessing
 {
+    using System;
     using System.Drawing;
-    using System.Drawing.Imaging;
-    using System.IO;
+    using System.Runtime.InteropServices;
+    using System.Windows.Interop;
     using System.Windows.Media.Imaging;
 
     using Emgu.CV;
@@ -58,19 +59,26 @@
             return new TemplateMatchResult();
         }
 
-        public BitmapImage ToBitmapImage()
+        public BitmapSource ToBitmapImage()
         {
-            using (Stream stream = new MemoryStream())
+            using (Bitmap bitmap = _image.Bitmap)
             {
-                _image.Bitmap.Save(stream, ImageFormat.Bmp);
-                stream.Seek(0, SeekOrigin.Begin);
+                IntPtr hbitmap = bitmap.GetHbitmap();
 
-                BitmapImage image = new BitmapImage();
-                image.BeginInit();
-                image.StreamSource = stream;
-                image.EndInit();
+                try
+                {
+                    BitmapSource bitmapSource = Imaging.CreateBitmapSourceFromHBitmap(hbitmap,
+                                                                                      IntPtr.Zero,
+                                                                                      System.Windows.Int32Rect.Empty,
+                                                                                      BitmapSizeOptions.FromEmptyOptions());
+                    bitmapSource.Freeze();
 
-                return image;
+                    return bitmapSource;
+                }
+                finally
+                {
+                    DeleteObject(hbitmap);
+                }
             }
         }
 
@@ -78,5 +86,8 @@
         {
             return _image;
         }
+
+        [DllImport("GDI32.dll")]
+        private static extern int DeleteObject(IntPtr obj);
     }
 }

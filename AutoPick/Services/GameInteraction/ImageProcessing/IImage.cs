@@ -18,7 +18,7 @@
 
         TemplateMatchResult MatchTemplate(IImage template, double threshold);
 
-        BitmapImage ToBitmapImage();
+        BitmapSource ToBitmapImage();
 
         Image<Rgb, byte> ToCvImage();
     }
