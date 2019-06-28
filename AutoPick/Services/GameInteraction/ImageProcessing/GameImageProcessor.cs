@@ -1,7 +1,5 @@
 ﻿namespace AutoPick.Services.GameInteraction.ImageProcessing
 {
-    using System.Windows.Media;
-
     using AutoPick.Models;
 
     public class GameImageProcessor : IGameImageProcessor
