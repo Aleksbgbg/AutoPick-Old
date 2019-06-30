@@ -16,6 +16,8 @@
 
         void Resize(double scale);
 
+        IImage SubImage(Rectangle portion);
+
         TemplateMatchResult MatchTemplate(IImage template, double threshold);
 
         BitmapSource ToBitmapImage();

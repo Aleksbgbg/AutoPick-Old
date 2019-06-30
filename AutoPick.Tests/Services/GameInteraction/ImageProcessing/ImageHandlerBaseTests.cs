@@ -1,8 +1,6 @@
 ﻿namespace AutoPick.Tests.Services.GameInteraction.ImageProcessing
 {
-    using System;
     using System.Drawing;
-    using System.Numerics;
 
     using AutoPick.Models;
     using AutoPick.Services.GameInteraction.ImageProcessing;
@@ -13,60 +11,22 @@
 
     public class ImageHandlerBaseTests
     {
-        private const int RectangleMargin = 3;
-
-        private static readonly Vector2 DefaultImageSize = new Vector2(1024, 576);
-
-        private readonly Mock<IImage> _templateMock;
+        private readonly Mock<ITemplateFinder> _templateFinderMock;
 
         private Mock<IImage> _imageMock;
 
         public ImageHandlerBaseTests()
         {
-            _templateMock = new Mock<IImage>();
-        }
+            _templateFinderMock = new Mock<ITemplateFinder>();
 
-        [Fact]
-        public void TestResizesTemplateToMatchImageSize()
-        {
-            const double scale = 2;
-            IImage image = SetupImageSize(DefaultImageSize.X * scale, DefaultImageSize.Y * scale);
-
-            ImageHandlerBase().ProcessImage(image);
-
-            VerifyResize(scale);
-        }
-
-        [Fact]
-        public void TestDoesntResizeWhenCorrectSize()
-        {
-            IImage image = SetupImageSize(DefaultImageSize.X, DefaultImageSize.Y);
-
-            ImageHandlerBase().ProcessImage(image);
-
-            VerifyResize(Times.Never);
-        }
-
-        [Fact]
-        public void TestScaleFactorRelativeToOriginal()
-        {
-            const double scale = 2;
-            IImage scaledImage = SetupImageSize(DefaultImageSize.X * scale, DefaultImageSize.Y * scale);
-            IImage defaultImage = SetupImageSize(DefaultImageSize.X, DefaultImageSize.Y);
-
-            var imageHandler = ImageHandlerBase();
-            imageHandler.ProcessImage(scaledImage);
-            imageHandler.ProcessImage(defaultImage);
-
-            VerifyResize(scale);
-            VerifyResize(1);
+            _imageMock = new Mock<IImage>();
         }
 
         [Fact]
         public void TestReturnsTrueResultOnSuccess()
         {
-            IImage image = SetupImageMatchesTemplate();
             const GameStatus expectedStatus = GameStatus.PickingLane;
+            IImage image = SetupImageMatchesTemplate();
 
             var processingResult = ImageHandlerBase(expectedStatus).ProcessImage(image);
 
@@ -101,79 +61,44 @@
 
         private ImageHandlerBase ImageHandlerBase(GameStatus gameStatus = default)
         {
-            return new ImageHandler(_templateMock.Object, gameStatus);
-        }
-
-        private IImage SetupImageSize(double x, double y)
-        {
-            Mock<IImage> imageMock = SetupImageMock(false);
-
-            imageMock.Setup(image => image.Width)
-                     .Returns((int)x);
-
-            imageMock.Setup(image => image.Height)
-                     .Returns((int)y);
-
-            return imageMock.Object;
+            return new ImageHandler(_templateFinderMock.Object, gameStatus);
         }
 
         private IImage SetupImageMatchesTemplate()
         {
-            return SetupImageMock(true).Object;
+            return SetupImage(new TemplateMatchResult(default));
         }
 
         private IImage SetupImageDoesNotMatchTemplate()
         {
-            return SetupImageMock(false).Object;
+            return SetupImage(TemplateMatchResult.Failed);
         }
 
         private IImage SetupImageMatchesTemplateInRectangle(Rectangle rectangle)
         {
-            return SetupImageMock(true, rectangle).Object;
+            return SetupImage(new TemplateMatchResult(rectangle));
         }
 
-        private Mock<IImage> SetupImageMock(bool isMatch)
-        {
-            return SetupImageMock(isMatch, Rectangle.Empty);
-        }
-
-        private Mock<IImage> SetupImageMock(bool isMatch, Rectangle matchRectangle)
+        private IImage SetupImage(TemplateMatchResult templateMatchResult)
         {
             _imageMock = new Mock<IImage>();
 
-            _imageMock.Setup(image => image.MatchTemplate(_templateMock.Object, It.IsInRange(0.75, 0.95, Range.Inclusive)))
-                      .Returns(isMatch ? new TemplateMatchResult(matchRectangle) : TemplateMatchResult.Failed);
+            IImage image = _imageMock.Object;
 
-            return _imageMock;
-        }
+            _templateFinderMock.Setup(finder => finder.FindTemplateIn(image))
+                               .Returns(templateMatchResult);
 
-        private void VerifyResize(double scale)
-        {
-            VerifyResize(scale, Times.Once);
-        }
-
-        private void VerifyResize(Func<Times> times)
-        {
-            VerifyResize(It.IsAny<double>(), times);
-        }
-
-        private void VerifyResize(double scale, Func<Times> times)
-        {
-            _templateMock.Verify(template => template.Resize(scale), times);
+            return image;
         }
 
         private void VerifyDrawRectangleOnImage(Rectangle rectangle)
         {
-            _imageMock.Verify(image => image.Draw(new Rectangle(rectangle.X - RectangleMargin,
-                                                                rectangle.Y - RectangleMargin,
-                                                                rectangle.Width + (2 * RectangleMargin),
-                                                                rectangle.Height + (2 * RectangleMargin))),
-                              Times.Once);
+            _imageMock.Verify(image => image.Draw(rectangle), Times.Once);
         }
 
         private class ImageHandler : ImageHandlerBase
         {
-            public ImageHandler(IImage template, GameStatus gameStatus) : base(template, gameStatus) { }
+            public ImageHandler(ITemplateFinder templateFinder, GameStatus gameStatus) : base(templateFinder, gameStatus) { }
         }
     }
 }

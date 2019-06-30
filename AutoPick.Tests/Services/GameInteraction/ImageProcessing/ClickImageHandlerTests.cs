@@ -11,9 +11,11 @@
 
     public class ClickImageHandlerTests
     {
-        private readonly Mock<IImage> _imageMock;
-
         private readonly Mock<IGameWindowClicker> _gameWindowClickerMock;
+
+        private readonly Mock<ITemplateFinder> _templateFinderMock;
+
+        private readonly Mock<IImage> _imageMock;
 
         private readonly ClickImageHandler _clickImageHandler;
 
@@ -21,10 +23,12 @@
         {
             _gameWindowClickerMock = new Mock<IGameWindowClicker>();
 
+            _templateFinderMock = new Mock<ITemplateFinder>();
+
             _imageMock = new Mock<IImage>();
 
             _clickImageHandler = new ClickImageHandler(_gameWindowClickerMock.Object,
-                                                       _imageMock.Object,
+                                                       _templateFinderMock.Object,
                                                        default);
         }
 
@@ -44,8 +48,8 @@
 
         private void SetupImageMatch(int x, int y, int width, int height)
         {
-            _imageMock.Setup(image => image.MatchTemplate(It.IsAny<IImage>(), It.IsAny<double>()))
-                      .Returns(new TemplateMatchResult(new Rectangle(x, y, width, height)));
+            _templateFinderMock.Setup(finder => finder.FindTemplateIn(_imageMock.Object))
+                               .Returns(new TemplateMatchResult(new Rectangle(x, y, width, height)));
         }
 
         private void ProcessImage()

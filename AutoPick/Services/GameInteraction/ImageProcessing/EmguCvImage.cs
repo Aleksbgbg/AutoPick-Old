@@ -26,6 +26,11 @@
             _originalImage = _currentImage = new Image<Rgb, byte>(filepath);
         }
 
+        private EmguCvImage(Image<Rgb, byte> image)
+        {
+            _originalImage = _currentImage = image;
+        }
+
         public int Width => _currentImage.Width;
 
         public int Height => _currentImage.Height;
@@ -47,15 +52,38 @@
             }
         }
 
+        public IImage SubImage(Rectangle portion)
+        {
+            Image<Rgb, byte> newImage = new Image<Rgb, byte>(portion.Width, portion.Height);
+
+            for (int x = 0; x < portion.Width; ++x)
+            {
+                for (int y = 0; y < portion.Height; ++y)
+                {
+                    newImage[y, x] = _currentImage[y + portion.Y, x + portion.X];
+                }
+            }
+
+            return new EmguCvImage(newImage);
+        }
+
         public TemplateMatchResult MatchTemplate(IImage template, double threshold)
         {
             using (Image<Gray, float> result = _currentImage.MatchTemplate(template.ToCvImage(),
                                                                     TemplateMatchingType.CcoeffNormed))
             {
+                bool x = false;
+
                 result.MinMax(out double[] minValues,
                               out double[] maxValues,
                               out Point[] minLocations,
                               out Point[] maxLocations);
+
+                if (x)
+                {
+                    template.ToCvImage().Save("E:\\Pictures\\League\\Template.png");
+                    _currentImage.Save("E:\\Pictures\\League\\Actual.png");
+                }
 
                 if (maxValues[0] > threshold)
                 {
