@@ -40,13 +40,7 @@
 
             _lastImageSize = currentImageSize;
 
-            int subRegionMargin = (int)(MatchMargin * aspectRatio);
-            int xOffset = (int)(image.Width * _normalizedTargetLocation.X) - subRegionMargin;
-            int yOffset = (int)(image.Height * _normalizedTargetLocation.Y) - subRegionMargin;
-            Rectangle targetSubRegion = new Rectangle(xOffset,
-                                                      yOffset,
-                                                      _template.Width + (2 * subRegionMargin),
-                                                      _template.Height + (2 * subRegionMargin));
+            Rectangle targetSubRegion = CalculateTargetSubRegion(image, aspectRatio);
 
             IImage subImage = image.SubImage(targetSubRegion);
 
@@ -54,13 +48,28 @@
 
             if (result.IsMatch)
             {
-                return new TemplateMatchResult(new Rectangle(result.MatchArea.X + xOffset,
-                                                             result.MatchArea.Y + yOffset,
-                                                             result.MatchArea.Width,
-                                                             result.MatchArea.Height));
+                return new TemplateMatchResult(AdjustTemplateMatchRectangle(result.MatchArea, targetSubRegion));
             }
 
             return result;
+        }
+
+        private Rectangle CalculateTargetSubRegion(IImage image, float aspectRatio)
+        {
+            int subRegionMargin = (int)(MatchMargin * aspectRatio);
+            int dimensionMargin = 2 * subRegionMargin;
+            return new Rectangle((int)(image.Width * _normalizedTargetLocation.X) - subRegionMargin,
+                                 (int)(image.Height * _normalizedTargetLocation.Y) - subRegionMargin,
+                                 _template.Width + dimensionMargin,
+                                 _template.Height + dimensionMargin);
+        }
+
+        private static Rectangle AdjustTemplateMatchRectangle(Rectangle original, Rectangle targetSubRegion)
+        {
+            return new Rectangle(targetSubRegion.X + original.X,
+                                 targetSubRegion.Y + original.Y,
+                                 original.Width,
+                                 original.Height);
         }
     }
 }
