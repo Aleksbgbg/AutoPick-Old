@@ -11,6 +11,8 @@
 
     public class ImageHandlerBaseTests
     {
+        private const int BorderMargin = 3;
+
         private readonly Mock<ITemplateFinder> _templateFinderMock;
 
         private Mock<IImage> _imageMock;
@@ -56,6 +58,7 @@
 
             ImageHandlerBase().ProcessImage(image);
 
+            expectedRectangle.Inflate(BorderMargin, BorderMargin);
             VerifyDrawRectangleOnImage(expectedRectangle);
         }
 

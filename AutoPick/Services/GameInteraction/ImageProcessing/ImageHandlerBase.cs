@@ -6,6 +6,8 @@
 
     public abstract class ImageHandlerBase : IImageHandler
     {
+        private const int BorderMargin = 3;
+
         private readonly ITemplateFinder _templateFinder;
 
         private readonly GameStatus _gameStatus;
@@ -22,7 +24,10 @@
 
             if (templateMatchResult.IsMatch)
             {
-                image.Draw(templateMatchResult.MatchArea);
+                Rectangle matchBorder = new Rectangle(templateMatchResult.MatchArea.Location,
+                                                      templateMatchResult.MatchArea.Size);
+                matchBorder.Inflate(BorderMargin, BorderMargin);
+                image.Draw(matchBorder);
 
                 TakeAction(templateMatchResult.MatchArea);
 
