@@ -1,6 +1,7 @@
 ﻿namespace AutoPick.Services.GameInteraction.ImageProcessing
 {
     using System.Drawing;
+    using System.Numerics;
 
     using AutoPick.Models;
 
@@ -29,7 +30,8 @@
                 matchBorder.Inflate(BorderMargin, BorderMargin);
                 image.Draw(matchBorder);
 
-                TakeAction(templateMatchResult.MatchArea);
+                TakeAction(new Vector2(templateMatchResult.MatchArea.X + (templateMatchResult.MatchArea.Width / 2),
+                                       templateMatchResult.MatchArea.Y + (templateMatchResult.MatchArea.Height / 2)));
 
                 return new ImageProcessingResult(_gameStatus, image);
             }
@@ -37,7 +39,7 @@
             return ImageProcessingResult.Failed;
         }
 
-        private protected virtual void TakeAction(Rectangle matchArea)
+        private protected virtual void TakeAction(Vector2 matchCenter)
         {
         }
     }

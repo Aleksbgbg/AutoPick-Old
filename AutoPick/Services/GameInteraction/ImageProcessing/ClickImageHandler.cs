@@ -1,6 +1,6 @@
 ﻿namespace AutoPick.Services.GameInteraction.ImageProcessing
 {
-    using System.Drawing;
+    using System.Numerics;
 
     using AutoPick.Models;
 
@@ -13,10 +13,9 @@
             _gameWindowClicker = gameWindowClicker;
         }
 
-        private protected override void TakeAction(Rectangle matchArea)
+        private protected override void TakeAction(Vector2 matchCenter)
         {
-            _gameWindowClicker.Click(matchArea.X + (matchArea.Width / 2),
-                                     matchArea.Y + (matchArea.Height / 2));
+            _gameWindowClicker.Click((int)matchCenter.X, (int)matchCenter.Y);
         }
     }
 }
