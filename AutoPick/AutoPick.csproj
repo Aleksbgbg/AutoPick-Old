@@ -118,6 +118,8 @@
     <Compile Include="Models\GameStatus.cs" />
     <Compile Include="Models\Lane.cs" />
     <Compile Include="Models\ResourceType.cs" />
+    <Compile Include="Services\GameInteraction\IGameWindowTyper.cs" />
+    <Compile Include="Services\GameInteraction\ImageProcessing\ChampionPickImageHandler.cs" />
     <Compile Include="Services\GameInteraction\ImageProcessing\ClickImageHandler.cs" />
     <Compile Include="Services\GameInteraction\ImageProcessing\DefaultImageHandler.cs" />
     <Compile Include="Services\GameInteraction\ImageProcessing\EmguCvImage.cs" />
@@ -252,6 +254,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Resources\Detection\Lobby.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Detection\Pick.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Resources\Detection\Queue.png">
