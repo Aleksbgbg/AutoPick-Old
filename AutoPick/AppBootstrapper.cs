@@ -32,7 +32,7 @@
             dependencyRegistrar.Singleton<IThreadRunner, ThreadRunner>();
             dependencyRegistrar.Singleton<IGameStatusRetriever, GameStatusRetriever>();
 
-            dependencyRegistrar.Singleton<Win32Kit, Win32Kit>();
+            dependencyRegistrar.Singleton<Win32Kit>();
             dependencyRegistrar.Handler<IGameWindowManager>(retriever => retriever.GetInstance<Win32Kit>());
             dependencyRegistrar.Handler<IGameWindowClicker>(retriever => retriever.GetInstance<Win32Kit>());
             dependencyRegistrar.Handler<IGameWindowTyper>(retriever => retriever.GetInstance<Win32Kit>());
@@ -40,7 +40,7 @@
             dependencyRegistrar.Singleton<IGameImageProcessor, GameImageProcessor>();
             dependencyRegistrar.Singleton<IToImageConverter, ToImageConverter>();
 
-            dependencyRegistrar.Singleton<ImageHandlerFactory, ImageHandlerFactory>();
+            dependencyRegistrar.Singleton<ImageHandlerFactory>();
             dependencyRegistrar.Handler<IImageHandlerFactory>(retriever => retriever.GetInstance<ImageHandlerFactory>());
             dependencyRegistrar.Handler<ISelectedRoleStore>(retriever => retriever.GetInstance<ImageHandlerFactory>().SelectedRoleStore);
         }
