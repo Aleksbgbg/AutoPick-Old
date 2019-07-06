@@ -72,18 +72,10 @@
             using (Image<Gray, float> result = _currentImage.MatchTemplate(template.ToCvImage(),
                                                                     TemplateMatchingType.CcoeffNormed))
             {
-                bool x = false;
-
                 result.MinMax(out double[] minValues,
                               out double[] maxValues,
                               out Point[] minLocations,
                               out Point[] maxLocations);
-
-                if (x)
-                {
-                    template.ToCvImage().Save("E:\\Pictures\\League\\Template.png");
-                    _currentImage.Save("E:\\Pictures\\League\\Actual.png");
-                }
 
                 if (maxValues[0] > threshold)
                 {
