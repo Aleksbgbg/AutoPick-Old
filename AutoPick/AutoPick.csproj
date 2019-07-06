@@ -114,6 +114,7 @@
     </Page>
     <Compile Include="Converters\DefaultConverters.cs" />
     <Compile Include="Converters\ResourceImageConverter.cs" />
+    <Compile Include="Extensions\RectangleExtensions.cs" />
     <Compile Include="Models\Champion.cs" />
     <Compile Include="Models\GameStatus.cs" />
     <Compile Include="Models\Lane.cs" />

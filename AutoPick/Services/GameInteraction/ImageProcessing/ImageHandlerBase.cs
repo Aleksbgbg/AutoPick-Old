@@ -19,6 +19,8 @@
             _gameStatus = gameStatus;
         }
 
+        private protected IImage Image { get; private set; }
+
         public ImageProcessingResult ProcessImage(IImage image)
         {
             TemplateMatchResult templateMatchResult = _templateFinder.FindTemplateIn(image);
@@ -30,6 +32,7 @@
                 matchBorder.Inflate(BorderMargin, BorderMargin);
                 image.Draw(matchBorder);
 
+                Image = image;
                 TakeAction(new Vector2(templateMatchResult.MatchArea.X + (templateMatchResult.MatchArea.Width / 2),
                                        templateMatchResult.MatchArea.Y + (templateMatchResult.MatchArea.Height / 2)));
 
