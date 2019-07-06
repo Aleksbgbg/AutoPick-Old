@@ -5,7 +5,7 @@
 #include <codecvt>
 #include <string>
 
-#include <Windows.h>
+#include "Win.h"
 
 HWND AutoPick_FindWindow(LPCSTR windowName)
 {
