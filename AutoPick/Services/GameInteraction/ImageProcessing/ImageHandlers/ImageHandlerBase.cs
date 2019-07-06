@@ -3,6 +3,7 @@
     using System.Drawing;
     using System.Numerics;
 
+    using AutoPick.Extensions;
     using AutoPick.Models;
 
     public abstract class ImageHandlerBase : IImageHandler
@@ -33,8 +34,7 @@
                 image.Draw(matchBorder);
 
                 Image = image;
-                TakeAction(new Vector2(templateMatchResult.MatchArea.X + (templateMatchResult.MatchArea.Width / 2),
-                                       templateMatchResult.MatchArea.Y + (templateMatchResult.MatchArea.Height / 2)));
+                TakeAction(templateMatchResult.MatchArea.Center());
 
                 return new ImageProcessingResult(_gameStatus, image);
             }
