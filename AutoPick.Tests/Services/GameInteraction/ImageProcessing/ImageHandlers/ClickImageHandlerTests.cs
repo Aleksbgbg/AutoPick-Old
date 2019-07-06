@@ -1,9 +1,10 @@
-﻿namespace AutoPick.Tests.Services.GameInteraction.ImageProcessing
+﻿namespace AutoPick.Tests.Services.GameInteraction.ImageProcessing.ImageHandlers
 {
     using System.Drawing;
 
     using AutoPick.Services.GameInteraction;
     using AutoPick.Services.GameInteraction.ImageProcessing;
+    using AutoPick.Services.GameInteraction.ImageProcessing.ImageHandlers;
 
     using Moq;
 

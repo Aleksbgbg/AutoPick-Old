@@ -1,6 +1,7 @@
 ﻿namespace AutoPick.Services.GameInteraction.ImageProcessing
 {
     using AutoPick.Models;
+    using AutoPick.Services.GameInteraction.ImageProcessing.ImageHandlers;
 
     public class GameImageProcessor : IGameImageProcessor
     {

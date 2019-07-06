@@ -1,4 +1,4 @@
-﻿namespace AutoPick.Services.GameInteraction.ImageProcessing
+﻿namespace AutoPick.Services.GameInteraction.ImageProcessing.ImageHandlers
 {
     using AutoPick.Models;
 

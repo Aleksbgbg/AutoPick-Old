@@ -2,6 +2,7 @@
 {
     using AutoPick.Services.GameInteraction;
     using AutoPick.Services.GameInteraction.ImageProcessing;
+    using AutoPick.Services.GameInteraction.ImageProcessing.ImageHandlers;
     using AutoPick.Services.Resources;
     using AutoPick.ViewModels;
     using AutoPick.ViewModels.Interfaces;

@@ -7,6 +7,7 @@
 
     using AutoPick.Models;
     using AutoPick.Services.GameInteraction.ImageProcessing;
+    using AutoPick.Services.GameInteraction.ImageProcessing.ImageHandlers;
 
     using Moq;
 
