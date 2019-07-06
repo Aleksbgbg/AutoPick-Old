@@ -38,7 +38,10 @@
 
             dependencyRegistrar.Singleton<IGameImageProcessor, GameImageProcessor>();
             dependencyRegistrar.Singleton<IToImageConverter, ToImageConverter>();
-            dependencyRegistrar.Singleton<IImageHandlerFactory, ImageHandlerFactory>();
+
+            dependencyRegistrar.Singleton<ImageHandlerFactory, ImageHandlerFactory>();
+            dependencyRegistrar.Handler<IImageHandlerFactory>(retriever => retriever.GetInstance<ImageHandlerFactory>());
+            dependencyRegistrar.Handler<ISelectedRoleStore>(retriever => retriever.GetInstance<ImageHandlerFactory>().SelectedRoleStore);
         }
     }
 }

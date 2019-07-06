@@ -6,7 +6,7 @@
     using AutoPick.Extensions;
     using AutoPick.Models;
 
-    public class ChampionPickImageHandler : ImageHandlerBase
+    public class ChampionPickImageHandler : ImageHandlerBase, ISelectedRoleStore
     {
         private readonly IGameWindowTyper _gameWindowTyper;
 
