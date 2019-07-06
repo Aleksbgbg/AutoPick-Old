@@ -77,7 +77,7 @@ EXTERN_DECL void CALL_CONV TypeAt(LPCSTR windowName, const int x, const int y, L
 		wchar_t character = wideText[charIndex];
 		const int inputIndex = (charIndex * 2) + 1;
 
-		FillKeyPressInput(&(inputs[inputIndex]), 0, character, KEYEVENTF_UNICODE);
+		FillKeyPressInput(inputs + inputIndex, 0, character, KEYEVENTF_UNICODE);
 	}
 
 	POINT targetTypePosition;
