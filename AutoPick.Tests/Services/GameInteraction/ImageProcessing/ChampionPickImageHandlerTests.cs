@@ -60,7 +60,7 @@
 
         private ChampionPickImageHandler ChampionPickImageHandler(string champion = default, string lane = default)
         {
-            var handler = new ChampionPickImageHandler(_gameWindowTyperMock.Object, _chatFinderMock.Object, _searchFinderMock.Object, _lockFinderMock.Object, default);
+            var handler = new ChampionPickImageHandler(_gameWindowTyperMock.Object, _searchFinderMock.Object, _chatFinderMock.Object, _lockFinderMock.Object, default);
             handler.Champion = champion;
             handler.Lane = lane;
 

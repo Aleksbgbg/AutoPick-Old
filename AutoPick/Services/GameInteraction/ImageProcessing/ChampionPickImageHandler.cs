@@ -14,7 +14,7 @@
 
         private readonly ITemplateFinder _searchFinder;
 
-        public ChampionPickImageHandler(IGameWindowTyper gameWindowTyper, ITemplateFinder chatFinder, ITemplateFinder searchFinder, ITemplateFinder templateFinder, GameStatus gameStatus) : base(templateFinder, gameStatus)
+        public ChampionPickImageHandler(IGameWindowTyper gameWindowTyper, ITemplateFinder searchFinder, ITemplateFinder chatFinder, ITemplateFinder templateFinder, GameStatus gameStatus) : base(templateFinder, gameStatus)
         {
             _gameWindowTyper = gameWindowTyper;
             _chatFinder = chatFinder;

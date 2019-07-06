@@ -3,7 +3,7 @@
     using System;
     using System.Runtime.InteropServices;
 
-    public class Win32Kit : IGameWindowManager, IGameWindowClicker
+    public class Win32Kit : IGameWindowManager, IGameWindowClicker, IGameWindowTyper
     {
         private const string DllName = "AutoPick.Win32.dll";
 
@@ -36,6 +36,16 @@
             Click(WindowName, x, y);
         }
 
+        public void TypeAt(int x, int y, string text)
+        {
+            TypeAt(WindowName, x, y, text);
+        }
+
+        public void PressEnter()
+        {
+            PressEnter(WindowName);
+        }
+
         [DllImport(DllName, CallingConvention = CallConvention)]
         private static extern bool IsWindowOpen(string windowName);
 
@@ -50,5 +60,11 @@
 
         [DllImport(DllName, CallingConvention = CallConvention)]
         private static extern void Click(string windowName, int x, int y);
+
+        [DllImport(DllName, CallingConvention = CallConvention)]
+        private static extern void TypeAt(string windowName, int x, int y, string text);
+
+        [DllImport(DllName, CallingConvention = CallConvention)]
+        private static extern void PressEnter(string windowName);
     }
 }

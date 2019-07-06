@@ -34,6 +34,7 @@
             dependencyRegistrar.Singleton<Win32Kit, Win32Kit>();
             dependencyRegistrar.Handler<IGameWindowManager>(retriever => retriever.GetInstance<Win32Kit>());
             dependencyRegistrar.Handler<IGameWindowClicker>(retriever => retriever.GetInstance<Win32Kit>());
+            dependencyRegistrar.Handler<IGameWindowTyper>(retriever => retriever.GetInstance<Win32Kit>());
 
             dependencyRegistrar.Singleton<IGameImageProcessor, GameImageProcessor>();
             dependencyRegistrar.Singleton<IToImageConverter, ToImageConverter>();
