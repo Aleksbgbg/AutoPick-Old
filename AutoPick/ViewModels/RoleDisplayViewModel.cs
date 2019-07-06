@@ -1,6 +1,7 @@
 ﻿namespace AutoPick.ViewModels
 {
     using AutoPick.Models;
+    using AutoPick.Services.GameInteraction;
     using AutoPick.Services.Resources;
     using AutoPick.ViewModels.Interfaces;
 
@@ -8,11 +9,14 @@
 
     public class RoleDisplayViewModel : ViewModelBase, IRoleDisplayViewModel
     {
-        public RoleDisplayViewModel(ILaneLoader laneLoader, IGameTrackViewModel gameTrackViewModel)
+        private readonly ISelectedRoleStore _selectedRoleStore;
+
+        public RoleDisplayViewModel(ILaneLoader laneLoader, IGameTrackViewModel gameTrackViewModel, ISelectedRoleStore selectedRoleStore)
         {
+            _selectedRoleStore = selectedRoleStore;
             GameTrackViewModel = gameTrackViewModel;
             Lanes = new BindableCollection<Lane>(laneLoader.LoadAllLanes());
-            _selectedLane = Lanes[0];
+            SelectedLane = Lanes[0];
         }
 
         public IGameTrackViewModel GameTrackViewModel { get; }
@@ -30,6 +34,8 @@
 
                 _selectedLane = value;
                 NotifyOfPropertyChange(nameof(SelectedLane));
+
+                _selectedRoleStore.Lane = _selectedLane.Name;
             }
         }
 
@@ -50,6 +56,7 @@
         public void ChangeChampion(Champion champion)
         {
             SelectedChampion = champion;
+            _selectedRoleStore.Champion = champion.Name;
         }
     }
 }

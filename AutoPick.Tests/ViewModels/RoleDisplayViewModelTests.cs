@@ -4,6 +4,7 @@
     using System.Linq;
 
     using AutoPick.Models;
+    using AutoPick.Services.GameInteraction;
     using AutoPick.Services.Resources;
     using AutoPick.ViewModels;
 
@@ -15,11 +16,15 @@
     {
         private readonly Mock<ILaneLoader> _laneLoaderMock;
 
+        private readonly Mock<ISelectedRoleStore> _selectedRoleStoreMock;
+
         private RoleDisplayViewModel _roleDisplayViewModel;
 
         public RoleDisplayViewModelTests()
         {
             _laneLoaderMock = new Mock<ILaneLoader>();
+
+            _selectedRoleStoreMock = new Mock<ISelectedRoleStore>();
         }
 
         [Fact]
@@ -37,9 +42,31 @@
         {
             SetupLanes();
 
-            ChangeChampion(new Champion("Katarina"));
+            ChangeChampion("Katarina");
 
             Assert.Equal("Katarina", ChampionName());
+        }
+
+        [Fact]
+        public void TestStoresChampionChanges()
+        {
+            const string champName = "Galio";
+            SetupLanes();
+
+            ChangeChampion(champName);
+
+            VerifyChampionStored(champName);
+        }
+
+        [Fact]
+        public void TestStoresLaneChanges()
+        {
+            const string laneName = "Middle";
+            SetupLanes();
+
+            ChangeLane(laneName);
+
+            VerifyLaneStored(laneName);
         }
 
         private string[] SetupLanes()
@@ -54,13 +81,19 @@
 
         private RoleDisplayViewModel CreateViewModel()
         {
-            return _roleDisplayViewModel = new RoleDisplayViewModel(_laneLoaderMock.Object, null);
+            return _roleDisplayViewModel = new RoleDisplayViewModel(_laneLoaderMock.Object, null, _selectedRoleStoreMock.Object);
         }
 
-        private void ChangeChampion(Champion champion)
+        private void ChangeChampion(string name)
         {
             CreateViewModel();
-            _roleDisplayViewModel.ChangeChampion(champion);
+            _roleDisplayViewModel.ChangeChampion(new Champion(name));
+        }
+
+        private void ChangeLane(string name)
+        {
+            CreateViewModel();
+            _roleDisplayViewModel.SelectedLane = new Lane(name);
         }
 
         private string ChampionName()
@@ -71,6 +104,16 @@
         private IEnumerable<string> GetLanes()
         {
             return _roleDisplayViewModel.Lanes.Select(lane => lane.Name);
+        }
+
+        private void VerifyChampionStored(string name)
+        {
+            _selectedRoleStoreMock.VerifySet(store => store.Champion = name, Times.Once);
+        }
+
+        private void VerifyLaneStored(string name)
+        {
+            _selectedRoleStoreMock.VerifySet(store => store.Lane = name, Times.Once);
         }
     }
 }

@@ -137,6 +137,7 @@
     <Compile Include="Services\GameInteraction\ImageProcessing\TemplateMatchResult.cs" />
     <Compile Include="Services\GameInteraction\ImageProcessing\ToImageConverter.cs" />
     <Compile Include="Services\GameInteraction\ImageProcessing\TemplateFinder.cs" />
+    <Compile Include="Services\GameInteraction\ISelectedRoleStore.cs" />
     <Compile Include="Services\Resources\ChampionLoader.cs" />
     <Compile Include="Services\GameInteraction\GameStatusRetriever.cs" />
     <Compile Include="Services\GameInteraction\GameMonitor.cs" />
